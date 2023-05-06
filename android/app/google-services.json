@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "143058856488",
+    "project_id": "aquago-2022",
+    "storage_bucket": "aquago-2022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:143058856488:android:10baa4bc7d1b287c84231d",
+        "android_client_info": {
+          "package_name": "com.example.majorpor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "143058856488-7pk8r553s5d8gbg804529sg55sbpt8dn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-8Eiye248Hc6nQsw1bfHkjyyim8zeNXc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "143058856488-7pk8r553s5d8gbg804529sg55sbpt8dn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
