@@ -53,8 +53,20 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 ),
                 child: ListTile(
                   visualDensity: VisualDensity(vertical: -4),
-                  title: Text(name),
-                  subtitle: Text(num),
+                  title: Text(
+                    name,
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
+                  ),
+                  subtitle: Text(
+                    num,
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
+                  ),
                   leading: Hero(
                       tag: '',
                       child: CircleAvatar(
@@ -63,6 +75,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       )),
                   trailing: Icon(
                     Icons.edit,
+                    color: Colors.white,
                   ),
                   onTap: () {
                     Navigator.push(
@@ -73,14 +86,25 @@ class _DrawerScreenState extends State<DrawerScreen> {
                 )),
           ),
           ListTile(
-            title: const Text('Transtaction Details'),
+            title: const Text(
+              'Transtaction Details',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white),
+            ),
             onTap: () {
-              
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: const Text('Log Out'),
+            title: const Text(
+              'Log Out',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white),
+            ),
             onTap: () {
               _logout();
 
@@ -90,7 +114,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       builder: (context) => const CustomerLogin()),
                   (route) => false).then((value) => setState(() {}));
               customToast("Logout successfully");
-              
+
               Navigator.pop(context);
             },
           ),
@@ -103,7 +127,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
           //         .get()
           //         .then((value) {
           //       print(value.docs.first['num']);
-                
+
           //     });
           //   },
           // ),

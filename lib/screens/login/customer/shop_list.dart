@@ -127,7 +127,7 @@ class _ShopListState extends State<ShopList> {
   ];
 
   // fun() async {
-    
+
   // }
 
   // @override
@@ -141,10 +141,11 @@ class _ShopListState extends State<ShopList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 1,
         backgroundColor: Colors.transparent,
       ),
       drawer: const DrawerScreen(),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Color(0xFF576CD6),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -157,6 +158,7 @@ class _ShopListState extends State<ShopList> {
                         padding: EdgeInsets.all(8),
                       )
                     : ListView.builder(
+                        padding: EdgeInsets.all(16),
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
@@ -164,22 +166,43 @@ class _ShopListState extends State<ShopList> {
                             snapshot.data!.docs[index].data()!
                                 as Map<String, dynamic>,
                           );
-                          return ListTile(
-                            leading: CircleAvatar(
-                              radius: 30.0,
-                              backgroundColor: Colors.white,
-                              backgroundImage: NetworkImage(
-                                  model.sellerAvatarUrl.toString()),
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              color: Colors.transparent,
+                              elevation: 1,
+                              child: ListTile(
+                                contentPadding: EdgeInsets.all(8),
+                                leading: CircleAvatar(
+                                  radius: 30.0,
+                                  // backgroundColor: Colors.white,
+                                  backgroundImage: NetworkImage(
+                                      model.sellerAvatarUrl.toString()),
+                                ),
+                                // tileColor: Colors.transparent,
+                                title: Text(
+                                  '${model.sellerName}',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white),
+                                ),
+                                subtitle: Text(
+                                  '${model.waterType}',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (c) =>
+                                              DetailsPage(passedInfo: model)));
+                                },
+                              ),
                             ),
-                            title: Text('${model.sellerName}'),
-                            subtitle: Text('${model.waterType}'),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (c) =>
-                                          DetailsPage(passedInfo: model)));
-                            },
                           );
                         },
                         itemCount: snapshot.data!.docs.length,

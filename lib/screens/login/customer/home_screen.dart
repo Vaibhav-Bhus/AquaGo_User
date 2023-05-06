@@ -13,8 +13,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
 
-  
-
   Widget get bottomNavigationBar {
     return Padding(
       padding: const EdgeInsets.all(20.0),
@@ -56,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
           )),
     );
   }
+
   _getDrawerItemWidget(int pos) {
     switch (pos) {
       case 0:

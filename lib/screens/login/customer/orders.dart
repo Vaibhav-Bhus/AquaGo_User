@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:majorpor/constants/shared_pref.dart';
 import 'package:majorpor/models/bulk_order.dart';
+import 'package:majorpor/screens/login/customer/drawer.dart';
 import 'package:majorpor/screens/login/customer/order_details.dart';
 
 class Orders extends StatefulWidget {
@@ -84,65 +85,88 @@ class _OrdersState extends State<Orders> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 1,
+        backgroundColor: Colors.transparent,
         title: const Text("Order History"),
       ),
+      drawer: DrawerScreen(),
       backgroundColor: const Color(0xFF576CD6),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection("bulkOrders")
-                  .where('custUid',
-                      isEqualTo: SharedPreferenceConstants.sharedPreferences!
-                          .getString(SharedPreferenceConstants.uid))
-                  .snapshots(),
-              builder: (context, snapshot) {
-                return !snapshot.hasData
-                    ? const Padding(
-                        padding: EdgeInsets.all(8),
-                      )
-                    : ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          BulkOrders model = BulkOrders.fromJson(
-                            snapshot.data!.docs[index].data()!
-                                as Map<String, dynamic>,
-                          );
-                          // Seller model = Seller.fromJson(
-                          //   snapshot.data!.docs[index].data()!
-                          //       as Map<String, dynamic>,
-                          // );
-                          return Card(
-                            color: Colors.transparent,
-                            child: ListTile(
-                              // leading: CircleAvatar(
-                              //   radius: 30.0,
-                              //   backgroundColor: Colors.white,
-                              //   backgroundImage: NetworkImage(
-                              //       model.sellerAvatarUrl.toString()),
-                              // ),
-                              title: Text('${model.shopName}'),
-                              subtitle: Text(
-                                  '${model.dateToDeliver!.substring(0, 11)}'),
-                              trailing: Text('${model.amt}'),
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (c) =>
-                                            OrderDetails(passedInfo: model)));
-                              },
-                            ),
-                          );
-                        },
-                        itemCount: snapshot.data!.docs.length,
-                      );
-              },
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection("bulkOrders")
+                    .where('custUid',
+                        isEqualTo: SharedPreferenceConstants.sharedPreferences!
+                            .getString(SharedPreferenceConstants.uid))
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  return !snapshot.hasData
+                      ? const Padding(
+                          padding: EdgeInsets.all(8),
+                        )
+                      : ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            BulkOrders model = BulkOrders.fromJson(
+                              snapshot.data!.docs[index].data()!
+                                  as Map<String, dynamic>,
+                            );
+                            // Seller model = Seller.fromJson(
+                            //   snapshot.data!.docs[index].data()!
+                            //       as Map<String, dynamic>,
+                            // );
+                            return Card(
+                              color: Colors.transparent,
+                              child: ListTile(
+                                // leading: CircleAvatar(
+                                //   radius: 30.0,
+                                //   backgroundColor: Colors.white,
+                                //   backgroundImage: NetworkImage(
+                                //       model.sellerAvatarUrl.toString()),
+                                // ),
+                                title: Text(
+                                  '${model.shopName}',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white),
+                                ),
+                                subtitle: Text(
+                                  '${model.dateToDeliver!.substring(0, 11)}',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
+                                ),
+                                trailing: Text(
+                                  '${model.amt}',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (c) =>
+                                              OrderDetails(passedInfo: model)));
+                                },
+                              ),
+                            );
+                          },
+                          itemCount: snapshot.data!.docs.length,
+                        );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       // body: Padding(
       //   padding: const EdgeInsets.all(20.0),

@@ -81,9 +81,9 @@ class _PastEntriesState extends State<PastEntries> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 1,
         title: const Text("Order History"),
-                backgroundColor: Colors.transparent,
-
+        backgroundColor: Colors.transparent,
       ),
       backgroundColor: const Color(0xFF576CD6),
       body: Padding(
@@ -99,14 +99,33 @@ class _PastEntriesState extends State<PastEntries> {
                 decoration:
                     BoxDecoration(borderRadius: BorderRadius.circular(14)),
                 child: Card(
-                  color: const Color(0xFF576CD6),
-                  elevation: 5,
+                  color: Colors.transparent,
+                  elevation: 1,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ListTile(
-                        title: Text(info[index]["shopName"].toString()),
-                        subtitle: Text(info[index]["Date"].toString()),
-                        trailing: Text(qua.toString()),
+                      
+                        title: Text(
+                          info[index]["shopName"].toString(),
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white),
+                        ),
+                        subtitle: Text(
+                          info[index]["Date"].toString(),
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        ),
+                        trailing: Text(
+                          qua.toString(),
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        ),
                         onTap: () {
                           Navigator.push(
                             context,

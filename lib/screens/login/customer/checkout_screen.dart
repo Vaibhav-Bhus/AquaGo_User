@@ -241,484 +241,670 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF576CD6),
       appBar: AppBar(
+        elevation: 1,
         backgroundColor: Colors.transparent,
         title: const Text(
           "Checkout",
           style: TextStyle(
               color: Colors.white,
-              fontSize: 18,
-              letterSpacing: 2.5,
+              fontSize: 20,
+              letterSpacing: 1.5,
               fontWeight: FontWeight.bold),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Center(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(SharedPreferenceConstants.sharedPreferences!
-                  .getString(SharedPreferenceConstants.name)
-                  .toString()),
-            ),
-            // ElevatedButton(
-            //     onPressed: _show, child: const Text('Show Time Picker')),
-            normaljar > 0
-                ? Row(
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 280,
-                        child: ListTile(
-                          title: Text("Normal Jar"),
-                          subtitle: Text(normaljarRate.toString()),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14)),
-                            child: Card(
-                              color: Colors.indigo[900],
-                              elevation: 5,
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                      onTap: () {
-                                        if (normaljar > 0) {
-                                          setState(() {
-                                            normaljar--;
-                                          });
-                                        }
-                                      },
-                                      child: const Icon(Icons.remove)),
-                                  Text("$normaljar"),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        normaljar++;
-                                      });
-                                    },
-                                    child: const Icon(Icons.add),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Text((normaljar * normaljarRate).toString()),
-                        ],
-                      )
-                    ],
-                  )
-                : const SizedBox(),
-            normalBottle > 0
-                ? Row(
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 280,
-                        child: ListTile(
-                          title: Text("Normal Bottle"),
-                          subtitle: Text(normalBottleRate.toString()),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14)),
-                            child: Card(
-                              color: Colors.indigo[900],
-                              elevation: 5,
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                      onTap: () {
-                                        if (normalBottle > 0) {
-                                          setState(() {
-                                            normalBottle--;
-                                          });
-                                        }
-                                      },
-                                      child: const Icon(Icons.remove)),
-                                  Text("$normalBottle"),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        normalBottle++;
-                                      });
-                                    },
-                                    child: const Icon(Icons.add),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Text((normalBottle * normalBottleRate).toString()),
-                        ],
-                      )
-                    ],
-                  )
-                : const SizedBox(),
-            chilledJar > 0
-                ? Row(
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 280,
-                        child: ListTile(
-                          title: Text("Chilled Jar"),
-                          subtitle: Text(chilledJarRate.toString()),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14)),
-                            child: Card(
-                              color: Colors.indigo[900],
-                              elevation: 5,
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                      onTap: () {
-                                        if (chilledJar > 0) {
-                                          setState(() {
-                                            chilledJar--;
-                                          });
-                                        }
-                                      },
-                                      child: const Icon(Icons.remove)),
-                                  Text("$chilledJar"),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        chilledJar++;
-                                      });
-                                    },
-                                    child: const Icon(Icons.add),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Text((chilledJar * chilledJarRate).toString()),
-                        ],
-                      )
-                    ],
-                  )
-                : const SizedBox(),
-            chilledBottle > 0
-                ? Row(
-                    children: [
-                      Container(
-                        height: 50,
-                        width: 280,
-                        child: ListTile(
-                          title: Text("Chilled Bottle"),
-                          subtitle: Text(chilledBottleRate.toString()),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(14)),
-                            child: Card(
-                              color: Colors.indigo[900],
-                              elevation: 5,
-                              child: Row(
-                                children: [
-                                  InkWell(
-                                      onTap: () {
-                                        if (chilledBottle > 0) {
-                                          setState(() {
-                                            chilledBottle--;
-                                          });
-                                        }
-                                      },
-                                      child: const Icon(Icons.remove)),
-                                  Text("$chilledBottle"),
-                                  InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        chilledBottle++;
-                                      });
-                                    },
-                                    child: const Icon(Icons.add),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Text((chilledBottle * chilledBottleRate).toString()),
-                        ],
-                      )
-                    ],
-                  )
-                : const SizedBox(),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              margin: EdgeInsets.all(12.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
+      body: Padding(
+        padding: const EdgeInsets.fromLTRB(12, 8, 12, 20),
+        child: SingleChildScrollView(
+          child: Center(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  SharedPreferenceConstants.sharedPreferences!
+                      .getString(SharedPreferenceConstants.name)
+                      .toString(),
+                  style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white),
+                ),
               ),
-              child: Card(
-                elevation: 4,
-                color: Color.fromARGB(255, 68, 91, 209),
-                child: Column(
-                  children: [
-                    ListTile(
-                      visualDensity: const VisualDensity(vertical: -4),
-                      title: const Text("Item Total"),
-                      trailing: Text(((chilledJar * chilledJarRate) +
-                              (chilledBottle * chilledBottleRate) +
-                              (normalBottle * normalBottleRate) +
-                              (normaljar * normaljarRate))
-                          .toString()),
-                    ),
-                    ListTile(
-                      visualDensity: const VisualDensity(vertical: -4),
-                      title: const Text("Charges"),
-                      trailing:
-                          Text((5 * int.parse(widget.floorNo)).toString()),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
-                      child: Divider(
-                        color: Colors.white,
-                        height: 10,
+              // ElevatedButton(
+              //     onPressed: _show, child: const Text('Show Time Picker')),
+              normaljar > 0
+                  ? Card(
+                      elevation: 1,
+                      color: Colors.transparent,
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 65,
+                            width: 280,
+                            child: ListTile(
+                              title: Text(
+                                "Normal Jar",
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                              subtitle: Text(
+                                normaljarRate.toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(14)),
+                                child: Card(
+                                  color: Colors.transparent,
+                                  elevation: 1,
+                                  child: Row(
+                                    children: [
+                                      InkWell(
+                                          onTap: () {
+                                            if (normaljar > 0) {
+                                              setState(() {
+                                                normaljar--;
+                                              });
+                                            }
+                                          },
+                                          child: const Icon(Icons.remove,
+                                              color: Colors.white)),
+                                      Text(
+                                        "$normaljar",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            normaljar++;
+                                          });
+                                        },
+                                        child: const Icon(Icons.add,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                (normaljar * normaljarRate).toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                            ],
+                          )
+                        ],
                       ),
-                    ),
-                    ListTile(
-                      visualDensity: const VisualDensity(vertical: -4),
-                      title: const Text("Grand Total"),
-                      trailing: Text(((5 * int.parse(widget.floorNo)) +
-                              (((chilledJar * chilledJarRate) +
+                    )
+                  : const SizedBox(),
+              normalBottle > 0
+                  ? Card(
+                      elevation: 1,
+                      color: Colors.transparent,
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 65,
+                            width: 280,
+                            child: ListTile(
+                              title: Text(
+                                "Normal Bottle",
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                              subtitle: Text(
+                                normalBottleRate.toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(14)),
+                                child: Card(
+                                  color: Colors.transparent,
+                                  elevation: 1,
+                                  child: Row(
+                                    children: [
+                                      InkWell(
+                                          onTap: () {
+                                            if (normalBottle > 0) {
+                                              setState(() {
+                                                normalBottle--;
+                                              });
+                                            }
+                                          },
+                                          child: const Icon(Icons.remove,
+                                              color: Colors.white)),
+                                      Text(
+                                        "$normalBottle",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            normalBottle++;
+                                          });
+                                        },
+                                        child: const Icon(Icons.add,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                (normalBottle * normalBottleRate).toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  : const SizedBox(),
+              chilledJar > 0
+                  ? Card(
+                      elevation: 1,
+                      color: Colors.transparent,
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 65,
+                            width: 280,
+                            child: ListTile(
+                              title: Text(
+                                "Chilled Jar",
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                              subtitle: Text(
+                                chilledJarRate.toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(14)),
+                                child: Card(
+                                  color: Colors.transparent,
+                                  elevation: 1,
+                                  child: Row(
+                                    children: [
+                                      InkWell(
+                                          onTap: () {
+                                            if (chilledJar > 0) {
+                                              setState(() {
+                                                chilledJar--;
+                                              });
+                                            }
+                                          },
+                                          child: const Icon(Icons.remove,
+                                              color: Colors.white)),
+                                      Text(
+                                        "$chilledJar",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            chilledJar++;
+                                          });
+                                        },
+                                        child: const Icon(Icons.add,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                (chilledJar * chilledJarRate).toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  : const SizedBox(),
+              chilledBottle > 0
+                  ? Card(
+                      elevation: 1,
+                      color: Colors.transparent,
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 65,
+                            width: 280,
+                            child: ListTile(
+                              title: Text(
+                                "Chilled Bottle",
+                                style: TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                              subtitle: Text(
+                                chilledBottleRate.toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(14)),
+                                child: Card(
+                                  color: Colors.transparent,
+                                  elevation: 1,
+                                  child: Row(
+                                    children: [
+                                      InkWell(
+                                          onTap: () {
+                                            if (chilledBottle > 0) {
+                                              setState(() {
+                                                chilledBottle--;
+                                              });
+                                            }
+                                          },
+                                          child: const Icon(Icons.remove,
+                                              color: Colors.white)),
+                                      Text(
+                                        "$chilledBottle",
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            chilledBottle++;
+                                          });
+                                        },
+                                        child: const Icon(Icons.add,
+                                            color: Colors.white),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Text(
+                                (chilledBottle * chilledBottleRate).toString(),
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    )
+                  : const SizedBox(),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                margin: EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Card(
+                  elevation: 1,
+                  color: Colors.transparent,
+                  child: Column(
+                    children: [
+                      ListTile(
+                        visualDensity: const VisualDensity(vertical: -4),
+                        title: const Text(
+                          "Item Total",
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        ),
+                        trailing: Text(
+                          ((chilledJar * chilledJarRate) +
                                   (chilledBottle * chilledBottleRate) +
                                   (normalBottle * normalBottleRate) +
-                                  (normaljar * normaljarRate))))
-                          .toString()),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: 100,
-                  height: 25,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF283855),
-                            Color(0xFF2E3F68),
-                            Color(0xFF3B5197)
-                          ],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter)),
-                  child: InkWell(
-                    onTap: (() {
-                      _selectDate(context);
-                    }),
-                    child: Text(currentDate == null
-                        ? 'Select Date'
-                        : '${currentDate.day}/${currentDate.month}/${currentDate.year}'),
-                  ),
-                ),
-                // Text(
-                //     ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: 100,
-                  height: 25,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF283855),
-                            Color(0xFF2E3F68),
-                            Color(0xFF3B5197)
-                          ],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter)),
-                  child: DropdownButton(
-                    underline: SizedBox(),
-                    value: slots,
-                    isExpanded: true,
-                    elevation: 8,
-                    style: TextStyle(fontSize: 15),
-                    hint: Text(
-                      "9 AM - 12 PM",
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 165, 160, 160),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700),
-                    ), // Not necessary for Option 1
-                    onChanged: (newValue) {
-                      setState(() {
-                        slots = newValue;
-                      });
-                    },
-                    items: slotList.map((value) {
-                      return DropdownMenuItem<String>(
-                        child: Text(
-                          value,
-                          style: TextStyle(color: Colors.black),
+                                  (normaljar * normaljarRate))
+                              .toString(),
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
                         ),
-                        value: value,
-                      );
-                    }).toList(),
-                    icon: Icon(
-                      Icons.keyboard_arrow_down_sharp,
-                      size: 32,
-                    ),
+                      ),
+                      ListTile(
+                        visualDensity: const VisualDensity(vertical: -4),
+                        title: const Text(
+                          "Charges",
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        ),
+                        trailing: Text(
+                          (5 * int.parse(widget.floorNo)).toString(),
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(8, 0, 8, 0),
+                        child: Divider(
+                          color: Colors.white,
+                          height: 15,
+                        ),
+                      ),
+                      ListTile(
+                        visualDensity: const VisualDensity(vertical: -4),
+                        title: const Text(
+                          "Grand Total",
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        ),
+                        trailing: Text(
+                          ((5 * int.parse(widget.floorNo)) +
+                                  (((chilledJar * chilledJarRate) +
+                                      (chilledBottle * chilledBottleRate) +
+                                      (normalBottle * normalBottleRate) +
+                                      (normaljar * normaljarRate))))
+                              .toString(),
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                // Text(slots ?? slotList[0]),
-              ],
-            ),
-            Container(
-              margin: EdgeInsets.all(12.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
               ),
-              child: Card(
-                elevation: 4,
-                color: Color.fromARGB(255, 68, 91, 209),
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                  child: ListTile(
-                    visualDensity: VisualDensity(vertical: -4),
-                    title: Text("Delivery at Address"),
-                    trailing: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddressScreen()),
-                        );
-                      },
-                      child: Container(
-                        width: 100,
-                        height: 25,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            gradient: const LinearGradient(
-                                colors: [
-                                  Color(0xFF283855),
-                                  Color(0xFF2E3F68),
-                                  Color(0xFF3B5197)
-                                ],
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter)),
-                        child: Text("Change",
-                            style: const TextStyle(
-                                fontSize: 15, color: Colors.white)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    width: 150,
+                    height: 45,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        gradient: const LinearGradient(
+                            colors: [
+                              Color(0xFF283855),
+                              Color(0xFF2E3F68),
+                              Color(0xFF3B5197)
+                            ],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter)),
+                    child: InkWell(
+                      onTap: (() {
+                        _selectDate(context);
+                      }),
+                      child: Text(
+                        currentDate == null
+                            ? 'Select Date'
+                            : '${currentDate.day}/${currentDate.month}/${currentDate.year}',
+                        style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
                       ),
                     ),
-                    horizontalTitleGap: 0,
-                    subtitle: Text(widget.address),
-                    leading: SizedBox(
-                      width: 5,
-                      child: Icon(
-                        size: 20,
-                        Icons.location_on,
+                  ),
+                  Container(
+                    width: 150,
+                    height: 45,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        gradient: const LinearGradient(
+                            colors: [
+                              Color(0xFF283855),
+                              Color(0xFF2E3F68),
+                              Color(0xFF3B5197)
+                            ],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter)),
+                    child: DropdownButton(
+                      underline: SizedBox(),
+                      value: slots,
+                      isExpanded: true,
+                      // elevation: 8,
+                      style: TextStyle(fontSize: 15),
+                      hint: Text(
+                        "     9 AM - 12 PM",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500),
+                      ), // Not necessary for Option 1
+                      onChanged: (newValue) {
+                        setState(() {
+                          slots = newValue;
+                        });
+                      },
+                      items: slotList.map((value) {
+                        return DropdownMenuItem<String>(
+                          child: Text(
+                            value,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                          value: value,
+                        );
+                      }).toList(),
+                      icon: Icon(
+                        Icons.keyboard_arrow_down_sharp,
+                        size: 32,
                         color: Colors.white,
                       ),
                     ),
                   ),
+                  // Text(
+                  //     ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+
+              Container(
+                margin: EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Card(
+                  elevation: 1,
+                  color: Colors.transparent,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                    child: ListTile(
+                      visualDensity: VisualDensity(vertical: -4),
+                      title: Text(
+                        "Delivery at Address",
+                        style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
+                      ),
+                      trailing: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddressScreen()),
+                          );
+                        },
+                        child: Container(
+                          width: 100,
+                          height: 35,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(6),
+                              gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xFF283855),
+                                    Color(0xFF2E3F68),
+                                    Color(0xFF3B5197)
+                                  ],
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter)),
+                          child: Text("Change",
+                              style: const TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500)),
+                        ),
+                      ),
+                      horizontalTitleGap: 0,
+                      subtitle: Text(
+                        widget.address,
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
+                      ),
+                      leading: SizedBox(
+                        width: 5,
+                        child: Icon(
+                          size: 20,
+                          Icons.location_on,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ),
-            InkWell(
-              onTap: () {
-                pay();
-                // pay();
-                // createOrder();
-              },
-              child: Center(
-                child: Container(
-                  width: 276,
-                  height: 48,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF283855),
-                            Color(0xFF2E3F68),
-                            Color(0xFF3B5197)
-                          ],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter)),
-                  child: Text("Pay Online",
-                      style:
-                          const TextStyle(fontSize: 18, color: Colors.white)),
+              InkWell(
+                onTap: () {
+                  pay();
+                  // pay();
+                  // createOrder();
+                },
+                child: Center(
+                  child: Container(
+                    width: 276,
+                    height: 48,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        gradient: const LinearGradient(
+                            colors: [
+                              Color(0xFF283855),
+                              Color(0xFF2E3F68),
+                              Color(0xFF3B5197)
+                            ],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter)),
+                    child: Text("Pay Online",
+                        style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white)),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              onTap: () async {
-                await getOrderId();
-                payment = 'Cash On Delivery';
-                await storeDetails();
-              },
-              child: Center(
-                child: Container(
-                  width: 276,
-                  height: 48,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF283855),
-                            Color(0xFF2E3F68),
-                            Color(0xFF3B5197)
-                          ],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter)),
-                  child: const Text("Pay On Delivery",
-                      style: TextStyle(fontSize: 18, color: Colors.white)),
-                ),
+              SizedBox(
+                height: 10,
               ),
-            )
-          ],
-        )),
+              InkWell(
+                onTap: () async {
+                  await getOrderId();
+                  payment = 'Cash On Delivery';
+                  await storeDetails();
+                },
+                child: Center(
+                  child: Container(
+                    width: 276,
+                    height: 48,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        gradient: const LinearGradient(
+                            colors: [
+                              Color(0xFF283855),
+                              Color(0xFF2E3F68),
+                              Color(0xFF3B5197)
+                            ],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter)),
+                    child: const Text("Pay On Delivery",
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white)),
+                  ),
+                ),
+              )
+            ],
+          )),
+        ),
       ),
     );
   }

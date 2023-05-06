@@ -50,13 +50,14 @@ class _AddressScreenState extends State<AddressScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF576CD6),
       appBar: AppBar(
+        elevation: 1,
         backgroundColor: Colors.transparent,
         title: const Text(
           "Address",
           style: TextStyle(
               color: Colors.white,
-              fontSize: 18,
-              letterSpacing: 2.5,
+              fontSize: 20,
+              letterSpacing: 1.5,
               fontWeight: FontWeight.bold),
         ),
       ),
@@ -275,7 +276,7 @@ class _AddressScreenState extends State<AddressScreen> {
                   }
                 },
                 child: Container(
-                  width: 190,
+                  width: 210,
                   height: 48,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
@@ -289,7 +290,10 @@ class _AddressScreenState extends State<AddressScreen> {
                           begin: Alignment.bottomCenter,
                           end: Alignment.topCenter)),
                   child: const Text("Proceed to Checkout",
-                      style: TextStyle(fontSize: 18, color: Colors.white)),
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white)),
                 ),
               )
             ],

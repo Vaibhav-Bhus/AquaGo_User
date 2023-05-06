@@ -16,7 +16,10 @@ class _DailyRecordState extends State<DailyRecord> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 1,
+      ),
       backgroundColor: const Color(0xFF576CD6),
       drawer: const DrawerScreen(),
       body: SingleChildScrollView(
@@ -30,8 +33,9 @@ class _DailyRecordState extends State<DailyRecord> {
                 ),
                 child: Card(
                   margin: const EdgeInsets.all(20),
+                  color: Colors.transparent,
 
-                  elevation: 5.0,
+                  elevation: 1,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(25, 8, 25, 15),
                     child: Column(
@@ -191,7 +195,7 @@ class _DailyRecordState extends State<DailyRecord> {
                       ],
                     ),
                   ),
-                  color: const Color(0xFF576CD6),
+
                   // surfaceTintColor: Colors.white,
                 ),
               ),
@@ -210,12 +214,15 @@ class _DailyRecordState extends State<DailyRecord> {
                     ),
                     padding: const EdgeInsets.all(8),
                     child: Card(
-                      elevation: 5,
-                      color: const Color(0xFF576CD6),
+                      elevation: 1,
+                      color: Colors.transparent,
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: Column(
                           children: [
+                            SizedBox(
+                              height: 5,
+                            ),
                             const Hero(
                               tag: 'abc',
                               child: CircleAvatar(
@@ -297,8 +304,8 @@ class _DailyRecordState extends State<DailyRecord> {
                     ),
                     padding: const EdgeInsets.all(8),
                     child: Card(
-                      elevation: 5,
-                      color: const Color(0xFF576CD6),
+                      elevation: 1,
+                      color: Colors.transparent,
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: Column(
@@ -333,8 +340,8 @@ class _DailyRecordState extends State<DailyRecord> {
                     ),
                     padding: const EdgeInsets.all(8),
                     child: Card(
-                      elevation: 5,
-                      color: const Color(0xFF576CD6),
+                      elevation: 1,
+                      color: Colors.transparent,
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: Column(
@@ -369,8 +376,8 @@ class _DailyRecordState extends State<DailyRecord> {
                     ),
                     padding: const EdgeInsets.all(8),
                     child: Card(
-                      elevation: 5,
-                      color: const Color(0xFF576CD6),
+                      elevation: 1,
+                      color: Colors.transparent,
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
                         child: Column(
@@ -408,11 +415,17 @@ class _DailyRecordState extends State<DailyRecord> {
                                         color: Colors.white, width: 2)),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.flutter_dash_rounded),
+                                    const Icon(
+                                      Icons.flutter_dash_rounded,
+                                      color: Colors.white,
+                                    ),
                                     const SizedBox(
                                       width: 50,
                                     ),
-                                    const Text("0")
+                                    const Text(
+                                      "0",
+                                      style: TextStyle(color: Colors.white),
+                                    )
                                   ],
                                 ),
                               ),
@@ -426,11 +439,17 @@ class _DailyRecordState extends State<DailyRecord> {
                                         color: Colors.white, width: 2)),
                                 child: Row(
                                   children: [
-                                    const Icon(Icons.flutter_dash_rounded),
+                                    const Icon(
+                                      Icons.flutter_dash_rounded,
+                                      color: Colors.white,
+                                    ),
                                     const SizedBox(
                                       width: 50,
                                     ),
-                                    const Text("0")
+                                    const Text(
+                                      "0",
+                                      style: TextStyle(color: Colors.white),
+                                    )
                                   ],
                                 ),
                               ),
