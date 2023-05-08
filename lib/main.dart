@@ -8,9 +8,7 @@ import 'package:splash_screen_view/SplashScreenView.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    
-  );
+  await Firebase.initializeApp();
   await FirebaseMessaging.instance.getInitialMessage();
   runApp(const MyApp());
 }

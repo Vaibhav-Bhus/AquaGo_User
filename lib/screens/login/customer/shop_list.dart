@@ -166,6 +166,10 @@ class _ShopListState extends State<ShopList> {
                             snapshot.data!.docs[index].data()!
                                 as Map<String, dynamic>,
                           );
+                          print(snapshot.data!.docs.length);
+                          // print(snapshot.data!.docs[1]);
+                          // print(snapshot.data!.docs[2]);
+
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Card(
@@ -175,7 +179,7 @@ class _ShopListState extends State<ShopList> {
                                 contentPadding: EdgeInsets.all(8),
                                 leading: CircleAvatar(
                                   radius: 30.0,
-                                  // backgroundColor: Colors.white,
+                                  backgroundColor: Colors.white,
                                   backgroundImage: NetworkImage(
                                       model.sellerAvatarUrl.toString()),
                                 ),

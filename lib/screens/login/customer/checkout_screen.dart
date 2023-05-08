@@ -878,6 +878,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   await getOrderId();
                   payment = 'Cash On Delivery';
                   await storeDetails();
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => OrderStatusScreen()),
+                      (Route<dynamic> route) => false);
                 },
                 child: Center(
                   child: Container(
@@ -910,13 +914,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   void verifyPayment(String orderId) async {
-    payment = 'paid';
+    payment = 'Paid';
     print(payment);
 
     await storeDetails();
     print("Verify Payment");
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => const OrderStatusScreen()),
         (Route<dynamic> route) => false);
   }
 
@@ -944,26 +948,30 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   storeDetails() async {
     print('start');
-    await FirebaseFirestore.instance.collection('bulkOrders').add({
-      'timeToDeliver': slots ?? slotList[0],
-      'dateToDeliver': currentDate.toString(),
-      'storeUid': SharedPreferenceConstants.sharedPreferences!
-          .getString(SharedPreferenceConstants.selleruid),
-      'custUid': SharedPreferenceConstants.sharedPreferences!
-          .getString(SharedPreferenceConstants.uid),
-      'orderId': orderId + 1,
-      'orderStatus': 'Pending',
-      'paymentStatus': payment,
-      'chilledJar': chilledJar,
-      'normalJar': normaljar,
-      'normalBottle': normalBottle,
-      'chilledBottle': chilledBottle,
-      'amt': amt,
-      'floor': widget.floorNo,
-      'address': widget.address,
-      'shopName': SharedPreferenceConstants.sharedPreferences!
-          .getString(SharedPreferenceConstants.name)
-    });
+    String doc = (orderId + 1).toString();
+    FirebaseFirestore.instance.collection('bulkOrders')
+      ..doc(doc).set({
+        'timeToDeliver': slots ?? slotList[0],
+        'dateToDeliver': currentDate.toString(),
+        'storeUid': SharedPreferenceConstants.sharedPreferences!
+            .getString(SharedPreferenceConstants.selleruid),
+        'custUid': SharedPreferenceConstants.sharedPreferences!
+            .getString(SharedPreferenceConstants.uid),
+        'orderId': orderId + 1,
+        'orderStatus': 'Pending',
+        'custName':
+            '${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.fname)} ${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.lname)}',
+        'paymentStatus': payment,
+        'chilledJar': chilledJar,
+        'normalJar': normaljar,
+        'normalBottle': normalBottle,
+        'chilledBottle': chilledBottle,
+        'amt': amt,
+        'floor': widget.floorNo,
+        'address': widget.address,
+        'shopName': SharedPreferenceConstants.sharedPreferences!
+            .getString(SharedPreferenceConstants.name)
+      });
     print('add');
   }
 
@@ -1097,12 +1105,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             'x-client-secret': 'TEST4099acc844b5b8841116c9793d4c3ab67763ab98'
           },
           body: jsonEncode({
-            "orderAmount": 1.00,
+            "orderAmount": amt,
             "orderId": "$orderId",
             "orderCurrency": 'INR',
-            "customerName": "Vaibhav Bhus",
-            "customerEmail": "vaibhavbhus01@gmail.com",
-            "customerPhone": "7719874955",
+            "customerName":
+                '${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.fname)} ${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.lname)}',
+            "customerEmail":
+                "${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.mail)}",
+            "customerPhone":
+                "${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.mob)}",
             "notifyUrl": "https://test.cashfree.com",
             "orderNote": "some order note here",
           }));

@@ -157,8 +157,8 @@ class _DetailsPageState extends State<DetailsPage> {
                               ),
                               leading: const CircleAvatar(
                                 radius: 30.0,
-                                backgroundImage: NetworkImage(
-                                    "https://media1.s-nbcnews.com/i/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p_d9270c5c545b30ea094084c7f2342eb4.jpg"),
+                                backgroundImage:
+                                    AssetImage('assets/images/jar.jpg'),
                               ),
                             ),
                           ),
@@ -224,10 +224,9 @@ class _DetailsPageState extends State<DetailsPage> {
                                     color: Colors.white),
                               ),
                               leading: const CircleAvatar(
-                                radius: 30.0,
-                                backgroundImage: NetworkImage(
-                                    "https://media1.s-nbcnews.com/i/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p_d9270c5c545b30ea094084c7f2342eb4.jpg"),
-                              ),
+                                  radius: 30.0,
+                                  backgroundImage:
+                                      AssetImage('assets/images/jar.jpg')),
                             ),
                           ),
                         ),
@@ -290,10 +289,9 @@ class _DetailsPageState extends State<DetailsPage> {
                                     color: Colors.white),
                               ),
                               leading: const CircleAvatar(
-                                radius: 30.0,
-                                backgroundImage: NetworkImage(
-                                    "https://media1.s-nbcnews.com/i/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p_d9270c5c545b30ea094084c7f2342eb4.jpg"),
-                              ),
+                                  radius: 30.0,
+                                  backgroundImage:
+                                      AssetImage('assets/images/bottle.png')),
                             ),
                           ),
                         ),
@@ -355,8 +353,8 @@ class _DetailsPageState extends State<DetailsPage> {
                               ),
                               leading: const CircleAvatar(
                                 radius: 30.0,
-                                backgroundImage: NetworkImage(
-                                    "https://media1.s-nbcnews.com/i/newscms/2019_21/2870431/190524-classic-american-cheeseburger-ew-207p_d9270c5c545b30ea094084c7f2342eb4.jpg"),
+                                backgroundImage:
+                                    AssetImage('assets/images/bottle.png'),
                               ),
                             ),
                           ),
