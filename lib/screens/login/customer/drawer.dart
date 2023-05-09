@@ -108,11 +108,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
             onTap: () {
               _logout();
 
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const CustomerLogin()),
-                  (route) => false).then((value) => setState(() {}));
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const CustomerLogin()),
+              ).then((value) => setState(() {}));
               customToast("Logout successfully");
 
               Navigator.pop(context);

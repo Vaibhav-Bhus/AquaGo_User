@@ -3,13 +3,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:majorpor/constants/shared_pref.dart';
 import 'package:majorpor/screens/login/customer/entry_time_address.dart';
 import 'package:majorpor/screens/login/customer/home_screen.dart';
 import 'package:majorpor/widgets/controllers.dart';
 import 'package:majorpor/widgets/custom_toast.dart';
 
 class EntryTimeDetails extends StatefulWidget {
-
   const EntryTimeDetails({super.key});
 
   @override
@@ -163,6 +163,20 @@ class _EntryTimeDetailsState extends State<EntryTimeDetails> {
                     'num': Controller.num,
                     'uId': FirebaseAuth.instance.currentUser!.uid
                   });
+                  SharedPreferenceConstants.sharedPreferences!
+                      .setString(SharedPreferenceConstants.mob, Controller.num);
+                  SharedPreferenceConstants.sharedPreferences!.setString(
+                      SharedPreferenceConstants.fname,
+                      firstNameController.text.trim());
+                  SharedPreferenceConstants.sharedPreferences!.setString(
+                      SharedPreferenceConstants.lname,
+                      lastNameController.text.trim());
+                  SharedPreferenceConstants.sharedPreferences!.setString(
+                      SharedPreferenceConstants.uid,
+                      FirebaseAuth.instance.currentUser!.uid);
+                  SharedPreferenceConstants.sharedPreferences!.setString(
+                      SharedPreferenceConstants.mail,
+                      emailController.text.trim());
                   Navigator.push(
                       context,
                       MaterialPageRoute(

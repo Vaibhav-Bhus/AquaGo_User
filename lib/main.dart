@@ -21,16 +21,18 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  fun()async{
+  fun() async {
     SharedPreferenceConstants.sharedPreferences =
-      await SharedPreferences.getInstance();
+        await SharedPreferences.getInstance();
   }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     fun();
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,7 +51,7 @@ class _MyAppState extends State<MyApp> {
           imageSize: 450,
           // speed: 1000,
           pageRouteTransition: PageRouteTransition.SlideTransition,
-          imageSrc: "assets/images/animation.gif",  
+          imageSrc: "assets/images/animation.gif",
           text: 'Aqua Go',
           textType: TextType.ColorizeAnimationText,
           textStyle: const TextStyle(

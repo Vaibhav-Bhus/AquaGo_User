@@ -876,6 +876,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               InkWell(
                 onTap: () async {
                   await getOrderId();
+                  int abc = ((5 * int.parse(widget.floorNo)) +
+                      (((chilledJar * chilledJarRate) +
+                          (chilledBottle * chilledBottleRate) +
+                          (normalBottle * normalBottleRate) +
+                          (normaljar * normaljarRate))));
+                  amt = abc.toDouble();
                   payment = 'Cash On Delivery';
                   await storeDetails();
                   Navigator.of(context).pushAndRemoveUntil(

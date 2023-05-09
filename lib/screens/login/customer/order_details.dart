@@ -25,7 +25,7 @@ class _OrderDetailsState extends State<OrderDetails> {
           ),
         ),
         title: Text(
-          "Order ${widget.passedInfo.orderId}",
+          "OrderID : #${widget.passedInfo.orderId}",
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white),
         ),

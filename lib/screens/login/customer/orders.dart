@@ -14,73 +14,73 @@ class Orders extends StatefulWidget {
 }
 
 class _OrdersState extends State<Orders> {
-  var info = [
-    {
-      "Date": "12-11-22",
-      "chilledBottle": "0",
-      "ChilledJar": "2",
-      "NormalJar": "0",
-      "NarmalBottle": "1",
-      "deliveredTo": "Amruta Arcade Solapur",
-      "orderId": "001",
-      "paymentStatus": "Paid",
-      "shopName": "Krishna Jal",
-      "totalAmount": "105",
-      "uid": FirebaseAuth.instance.currentUser!.uid
-    },
-    {
-      "Date": "12-11-22",
-      "chilledBottle": "0",
-      "ChilledJar": "2",
-      "NormalJar": "0",
-      "NarmalBottle": "1",
-      "deliveredTo": "Amruta Arcade Solapur",
-      "orderId": "001",
-      "paymentStatus": "Paid",
-      "shopName": "Krishna Jal",
-      "totalAmount": "105",
-      "uid": FirebaseAuth.instance.currentUser!.uid
-    },
-    {
-      "Date": "12-11-22",
-      "chilledBottle": "0",
-      "ChilledJar": "2",
-      "NormalJar": "0",
-      "NarmalBottle": "1",
-      "deliveredTo": "Amruta Arcade Solapur",
-      "orderId": "001",
-      "paymentStatus": "Paid",
-      "shopName": "Krishna Jal",
-      "totalAmount": "105",
-      "uid": FirebaseAuth.instance.currentUser!.uid
-    },
-    {
-      "Date": "12-11-22",
-      "chilledBottle": "0",
-      "ChilledJar": "2",
-      "NormalJar": "0",
-      "NarmalBottle": "1",
-      "deliveredTo": "Amruta Arcade Solapur",
-      "orderId": "001",
-      "paymentStatus": "Paid",
-      "shopName": "Krishna Jal",
-      "totalAmount": "105",
-      "uid": FirebaseAuth.instance.currentUser!.uid
-    },
-    {
-      "Date": "12-11-22",
-      "chilledBottle": "0",
-      "ChilledJar": "2",
-      "NormalJar": "0",
-      "NarmalBottle": "1",
-      "deliveredTo": "Amruta Arcade Solapur",
-      "orderId": "001",
-      "paymentStatus": "Paid",
-      "shopName": "Krishna Jal",
-      "totalAmount": "105",
-      "uid": FirebaseAuth.instance.currentUser!.uid
-    },
-  ];
+  // var info = [
+  //   {
+  //     "Date": "12-11-22",
+  //     "chilledBottle": "0",
+  //     "ChilledJar": "2",
+  //     "NormalJar": "0",
+  //     "NarmalBottle": "1",
+  //     "deliveredTo": "Amruta Arcade Solapur",
+  //     "orderId": "001",
+  //     "paymentStatus": "Paid",
+  //     "shopName": "Krishna Jal",
+  //     "totalAmount": "105",
+  //     "uid": FirebaseAuth.instance.currentUser!.uid
+  //   },
+  //   {
+  //     "Date": "12-11-22",
+  //     "chilledBottle": "0",
+  //     "ChilledJar": "2",
+  //     "NormalJar": "0",
+  //     "NarmalBottle": "1",
+  //     "deliveredTo": "Amruta Arcade Solapur",
+  //     "orderId": "001",
+  //     "paymentStatus": "Paid",
+  //     "shopName": "Krishna Jal",
+  //     "totalAmount": "105",
+  //     "uid": FirebaseAuth.instance.currentUser!.uid
+  //   },
+  //   {
+  //     "Date": "12-11-22",
+  //     "chilledBottle": "0",
+  //     "ChilledJar": "2",
+  //     "NormalJar": "0",
+  //     "NarmalBottle": "1",
+  //     "deliveredTo": "Amruta Arcade Solapur",
+  //     "orderId": "001",
+  //     "paymentStatus": "Paid",
+  //     "shopName": "Krishna Jal",
+  //     "totalAmount": "105",
+  //     "uid": FirebaseAuth.instance.currentUser!.uid
+  //   },
+  //   {
+  //     "Date": "12-11-22",
+  //     "chilledBottle": "0",
+  //     "ChilledJar": "2",
+  //     "NormalJar": "0",
+  //     "NarmalBottle": "1",
+  //     "deliveredTo": "Amruta Arcade Solapur",
+  //     "orderId": "001",
+  //     "paymentStatus": "Paid",
+  //     "shopName": "Krishna Jal",
+  //     "totalAmount": "105",
+  //     "uid": FirebaseAuth.instance.currentUser!.uid
+  //   },
+  //   {
+  //     "Date": "12-11-22",
+  //     "chilledBottle": "0",
+  //     "ChilledJar": "2",
+  //     "NormalJar": "0",
+  //     "NarmalBottle": "1",
+  //     "deliveredTo": "Amruta Arcade Solapur",
+  //     "orderId": "001",
+  //     "paymentStatus": "Paid",
+  //     "shopName": "Krishna Jal",
+  //     "totalAmount": "105",
+  //     "uid": FirebaseAuth.instance.currentUser!.uid
+  //   },
+  // ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +89,7 @@ class _OrdersState extends State<Orders> {
         backgroundColor: Colors.transparent,
         title: const Text("Order History"),
       ),
-      drawer: DrawerScreen(),
+      drawer: const DrawerScreen(),
       backgroundColor: const Color(0xFF576CD6),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -102,6 +102,7 @@ class _OrdersState extends State<Orders> {
                     .where('custUid',
                         isEqualTo: SharedPreferenceConstants.sharedPreferences!
                             .getString(SharedPreferenceConstants.uid))
+                            .orderBy('orderId',descending: true)
                     .snapshots(),
                 builder: (context, snapshot) {
                   return !snapshot.hasData
@@ -116,36 +117,26 @@ class _OrdersState extends State<Orders> {
                               snapshot.data!.docs[index].data()!
                                   as Map<String, dynamic>,
                             );
-                            // Seller model = Seller.fromJson(
-                            //   snapshot.data!.docs[index].data()!
-                            //       as Map<String, dynamic>,
-                            // );
                             return Card(
                               color: Colors.transparent,
-                              child: ListTile(
-                                // leading: CircleAvatar(
-                                //   radius: 30.0,
-                                //   backgroundColor: Colors.white,
-                                //   backgroundImage: NetworkImage(
-                                //       model.sellerAvatarUrl.toString()),
-                                // ),
+                              child: ListTile(  // ),
                                 title: Text(
                                   '${model.shopName}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600,
                                       color: Colors.white),
                                 ),
                                 subtitle: Text(
                                   '${model.dateToDeliver!.substring(0, 11)}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.white),
                                 ),
                                 trailing: Text(
                                   '${model.amt}',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w500,
                                       color: Colors.white),

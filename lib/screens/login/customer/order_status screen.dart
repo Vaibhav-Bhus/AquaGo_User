@@ -12,7 +12,6 @@ class _OrderStatusScreenState extends State<OrderStatusScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF576CD6), 
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

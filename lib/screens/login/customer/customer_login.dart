@@ -9,6 +9,7 @@ import 'package:majorpor/screens/login/customer/entry_time_details.dart';
 import 'package:majorpor/screens/login/customer/home_screen.dart';
 import 'package:majorpor/widgets/button_loader.dart';
 import 'package:majorpor/widgets/controllers.dart';
+import 'package:majorpor/widgets/controllers.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -126,6 +127,7 @@ class _CustomerLoginState extends State<CustomerLogin> {
   }
 
   void _verifyOtp() async {
+    Controller.num = phoneNumberController.text.trim();
     try {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: _verificationId,
