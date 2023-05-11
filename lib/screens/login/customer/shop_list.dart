@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:majorpor/constants/shared_pref.dart';
 import 'package:majorpor/models/seller_details.dart';
 import 'package:majorpor/screens/login/customer/details.dart';
 import 'package:majorpor/screens/login/customer/drawer.dart';
@@ -144,62 +145,79 @@ class _ShopListState extends State<ShopList> {
       appBar: AppBar(
         elevation: 1,
         backgroundColor: Colors.transparent,
+        centerTitle: true,
+        title: Text(
+            '${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.fname)} ${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.lname)}'),
       ),
       drawer: const DrawerScreen(),
       backgroundColor: const Color(0xFF576CD6),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.all(8.0),
-                width: 320,
-                height: 48,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(6),
-                    gradient: const LinearGradient(
-                        colors: [Color(0xFFE8ECFD), Color(0xFF8898E3)])),
-                child: TextFormField(
-                  controller: quantityController,
-                  textDirection: TextDirection.ltr,
-                  onFieldSubmitted: (value) {
-                    setState(() {});
-                  },
-                  decoration: const InputDecoration(
-                    border: InputBorder.none,
-                    hintText: "  Enter Required Quantity",
-                    fillColor: Colors.transparent,
-                  ),
-                ),
+      body: SafeArea(
+          child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: InkWell(
+            //     onTap: () {
+            //       Navigator.push(
+            //           context,
+            //           MaterialPageRoute(
+            //               builder: (context) => const AddNewStore()));
+            //     },
+            //     child: Container(
+            //       width: double.infinity,
+            //       height: 48,
+            //       alignment: Alignment.center,
+            //       decoration: BoxDecoration(
+            //           borderRadius: BorderRadius.circular(6),
+            //           gradient: const LinearGradient(
+            //               colors: [
+            //                 Color(0xFF283855),
+            //                 Color(0xFF2E3F68),
+            //                 Color(0xFF3B5197)
+            //               ],
+            //               begin: Alignment.bottomCenter,
+            //               end: Alignment.topCenter)),
+            //       child: const Text("Add New Store",
+            //           style: TextStyle(fontSize: 18, color: Colors.white)),
+            //     ),
+            //   ),
+            // ),
+            const ListTile(
+              title: Text(
+                'Store Name',
+                style: TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white),
+              ),
+              trailing: Text(
+                'Mobile Number',
+                style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white),
               ),
             ),
-          ),
-          quantityController.text.length == 0
-              ? SliverToBoxAdapter(
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection("sellers")
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      return !snapshot.hasData
-                          ? const Padding(
-                              padding: EdgeInsets.all(8),
-                            )
-                          : ListView.builder(
-                              padding: const EdgeInsets.all(16),
+            StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('sellers')
+                    .where('isRatesFilled', isEqualTo: 'true')
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  return !snapshot.hasData
+                      ? const Padding(padding: EdgeInsets.all(8))
+                      : Expanded(
+                          child: ListView.builder(
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
-                              itemBuilder: (context, index) {
+                              itemCount: snapshot.data!.docs.length,
+                              itemBuilder: ((context, index) {
                                 Seller model = Seller.fromJson(
                                   snapshot.data!.docs[index].data()!
                                       as Map<String, dynamic>,
                                 );
-                                print(snapshot.data!.docs.length);
-                                // print(snapshot.data!.docs[1]);
-                                // print(snapshot.data!.docs[2]);
-
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Card(
@@ -213,9 +231,16 @@ class _ShopListState extends State<ShopList> {
                                         backgroundImage: NetworkImage(
                                             model.sellerAvatarUrl.toString()),
                                       ),
-                                      // tileColor: Colors.transparent,
+                                      tileColor: Colors.transparent,
                                       title: Text(
                                         '${model.sellerName}',
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.white),
+                                      ),
+                                      trailing: Text(
+                                        '${model.phone}',
                                         style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w600,
@@ -238,118 +263,226 @@ class _ShopListState extends State<ShopList> {
                                     ),
                                   ),
                                 );
-                              },
-                              itemCount: snapshot.data!.docs.length,
-                            );
-                    },
-                  ),
-                )
-              : SliverToBoxAdapter(
-                  child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection("sellers")
-                        .where('totalQuantity',
-                            isGreaterThanOrEqualTo:
-                                int.parse(quantityController.text))
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      print(quantityController.text);
-                      // print(snapshot.data!.docs);
-                      return !snapshot.hasData
-                          ? const Padding(
-                              padding: EdgeInsets.all(8),
-                            )
-                          : ListView.builder(
-                              padding: const EdgeInsets.all(16),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                Seller model = Seller.fromJson(
-                                  snapshot.data!.docs[index].data()!
-                                      as Map<String, dynamic>,
-                                );
-                                print(snapshot.data!.docs.length);
-                                // print(snapshot.data!.docs[1]);
-                                // print(snapshot.data!.docs[2]);
+                              })),
+                        );
+                })
+          ],
+        ),
+      )),
+      // body: SingleChildScrollView(
+      //   child: Center(
+      //     child: Column(
+      //       children: [
+      //         StreamBuilder<QuerySnapshot>(
+      //           stream: FirebaseFirestore.instance
+      //               .collection("sellers")
+      //               .snapshots(),
+      //           builder: (context, snapshot) {
+      //             return !snapshot.hasData
+      //                 ? const Padding(
+      //                     padding: EdgeInsets.all(8),
+      //                   )
+      //                 : ListView.builder(
+      //                     padding: const EdgeInsets.all(16),
+      //                     // scrollDirection: Axis.vertical,
+      //                     shrinkWrap: true,
+      //                     itemBuilder: (context, index) {
+      //                       Seller model = Seller.fromJson(
+      //                         snapshot.data!.docs[index].data()!
+      //                             as Map<String, dynamic>,
+      //                       );
+      //                       print(snapshot.data!.docs.length);
+      //                       // print(snapshot.data!.docs[1]);
+      //                       // print(snapshot.data!.docs[2]);
 
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Card(
-                                    color: Colors.transparent,
-                                    elevation: 1,
-                                    child: ListTile(
-                                      contentPadding: const EdgeInsets.all(8),
-                                      leading: CircleAvatar(
-                                        radius: 30.0,
-                                        backgroundColor: Colors.white,
-                                        backgroundImage: NetworkImage(
-                                            model.sellerAvatarUrl.toString()),
-                                      ),
-                                      // tileColor: Colors.transparent,
-                                      title: Text(
-                                        '${model.sellerName}',
-                                        style: const TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w600,
-                                            color: Colors.white),
-                                      ),
-                                      subtitle: Text(
-                                        '${model.waterType}',
-                                        style: const TextStyle(
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.white),
-                                      ),
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (c) => DetailsPage(
-                                                    passedInfo: model)));
-                                      },
-                                    ),
-                                  ),
-                                );
-                              },
-                              itemCount: snapshot.data!.docs.length,
-                            );
-                    },
-                  ),
-                ),
-        ],
-      ),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(20.0),
-      //   child: ListView.builder(
-      //       itemCount: info.length,
-      //       itemBuilder: (context, index) {
-      //         return Padding(
-      //           padding: const EdgeInsets.all(8.0),
-      //           child: ListTile(
-      //             title: Text(info[index]["name"].toString()),
-      //             onTap: () {
-      //               Navigator.push(
-      //                 context,
-      //                 MaterialPageRoute(
-      //                   builder: (context) => DetailsPage(
-      //                     passedInfo: info[index],
-      //                   ),
-      //                 ),
-      //               );
-      //             },
-      //             leading: Hero(
-      //               tag: info[index]["images"]!,
-      //               child: const CircleAvatar(
-      //                 radius: 30.0,
-      //                 backgroundColor: Colors.white,
-      //                 // backgroundImage:
-      //                 //     NetworkImage(info[index]["images"].toString()),
-      //               ),
-      //             ),
-      //           ),
-      //         );
-      //       }),
+      //                       return Padding(
+      //                         padding: const EdgeInsets.all(8.0),
+      //                         child: Card(
+      //                           color: Colors.transparent,
+      //                           elevation: 1,
+      //                           child: ListTile(
+      //                             contentPadding: const EdgeInsets.all(8),
+      //                             // leading: CircleAvatar(
+      //                             //   radius: 30.0,
+      //                             //   backgroundColor: Colors.white,
+      //                             //   backgroundImage: NetworkImage(
+      //                             //       model.sellerAvatarUrl.toString()),
+      //                             // ),
+      //                             // tileColor: Colors.transparent,
+      //                             title: Text(
+      //                               '${model.sellerName}',
+      //                               style: const TextStyle(
+      //                                   fontSize: 18,
+      //                                   fontWeight: FontWeight.w600,
+      //                                   color: Colors.white),
+      //                             ),
+      //                             subtitle: Text(
+      //                               '${model.waterType}',
+      //                               style: const TextStyle(
+      //                                   fontSize: 15,
+      //                                   fontWeight: FontWeight.w500,
+      //                                   color: Colors.white),
+      //                             ),
+      //                             onTap: () {
+      //                               Navigator.push(
+      //                                   context,
+      //                                   MaterialPageRoute(
+      //                                       builder: (c) => DetailsPage(
+      //                                           passedInfo: model)));
+      //                             },
+      //                           ),
+      //                         ),
+      //                       );
+      //                     },
+      //                     itemCount: snapshot.data!.docs.length,
+      //                   );
+      //           },
+      //         ),
+      //       ],
+      //     ),
+      //   ),
       // ),
+      // body: CustomScrollView(
+      // slivers: [
+      // SliverToBoxAdapter(
+      //   child: Padding(
+      //     padding: const EdgeInsets.all(8.0),
+      //     child: Container(
+      //       margin: const EdgeInsets.all(10),
+      //       padding: const EdgeInsets.all(8.0),
+      //       width: 320,
+      //       height: 48,
+      //       decoration: BoxDecoration(
+      //           borderRadius: BorderRadius.circular(6),
+      //           gradient: const LinearGradient(
+      //               colors: [Color(0xFFE8ECFD), Color(0xFF8898E3)])),
+      //       child: TextFormField(
+      //         controller: quantityController,
+      //         textDirection: TextDirection.ltr,
+      //         onFieldSubmitted: (value) {
+      //           setState(() {});
+      //         },
+      //         decoration: const InputDecoration(
+      //           border: InputBorder.none,
+      //           hintText: "  Enter Required Quantity",
+      //           fillColor: Colors.transparent,
+      //         ),
+      //       ),
+      //     ),
+      //   ),
+      // ),
+
+      // SliverToBoxAdapter(
+      //   child:
     );
+    // : SliverToBoxAdapter(
+    //     child: StreamBuilder<QuerySnapshot>(
+    //       stream:
+    //       builder: (context, snapshot) {
+    //         print(quantityController.text);
+    //         // print(snapshot.data!.docs);
+    //         return !snapshot.hasData
+    //             ? const Padding(
+    //                 padding: EdgeInsets.all(8),
+    //               )
+    //             : ListView.builder(
+    //                 padding: const EdgeInsets.all(16),
+    //                 scrollDirection: Axis.vertical,
+    //                 shrinkWrap: true,
+    //                 itemBuilder: (context, index) {
+    //                   Seller model = Seller.fromJson(
+    //                     snapshot.data!.docs[index].data()!
+    //                         as Map<String, dynamic>,
+    //                   );
+    //                   print(snapshot.data!.docs.length);
+    //                   // print(snapshot.data!.docs[1]);
+    //                   // print(snapshot.data!.docs[2]);
+
+    //                   return Padding(
+    //                     padding: const EdgeInsets.all(8.0),
+    //                     child: Card(
+    //                       color: Colors.transparent,
+    //                       elevation: 1,
+    //                       child: ListTile(
+    //                         contentPadding: const EdgeInsets.all(8),
+    //                         leading: CircleAvatar(
+    //                           radius: 30.0,
+    //                           backgroundColor: Colors.white,
+    //                           backgroundImage: NetworkImage(
+    //                               model.sellerAvatarUrl.toString()),
+    //                         ),
+    //                         // tileColor: Colors.transparent,
+    //                         title: Text(
+    //                           '${model.sellerName}',
+    //                           style: const TextStyle(
+    //                               fontSize: 18,
+    //                               fontWeight: FontWeight.w600,
+    //                               color: Colors.white),
+    //                         ),
+    //                         subtitle: Text(
+    //                           '${model.waterType}',
+    //                           style: const TextStyle(
+    //                               fontSize: 15,
+    //                               fontWeight: FontWeight.w500,
+    //                               color: Colors.white),
+    //                         ),
+    //                         onTap: () {
+    //                           Navigator.push(
+    //                               context,
+    //                               MaterialPageRoute(
+    //                                   builder: (c) => DetailsPage(
+    //                                       passedInfo: model)));
+    //                         },
+    //                       ),
+    //                     ),
+    //                   );
+    //                 },
+    //                 itemCount: snapshot.data!.docs.length,
+    //               );
+    //       },
+    //     ),
+    //   ),
+    //   ],
+    // ),
+    // body: Padding(
+    //   padding: const EdgeInsets.all(20.0),
+    //   child: ListView.builder(
+    //       itemCount: info.length,
+    //       itemBuilder: (context, index) {
+    //         return Padding(
+    //           padding: const EdgeInsets.all(8.0),
+    //           child: ListTile(
+    //             title: Text(info[index]["name"].toString()),
+    //             onTap: () {
+    //               Navigator.push(
+    //                 context,
+    //                 MaterialPageRoute(
+    //                   builder: (context) => DetailsPage(
+    //                     passedInfo: info[index],
+    //                   ),
+    //                 ),
+    //               );
+    //             },
+    //             leading: Hero(
+    //               tag: info[index]["images"]!,
+    //               child: const CircleAvatar(
+    //                 radius: 30.0,
+    //                 backgroundColor: Colors.white,
+    //                 // backgroundImage:
+    //                 //     NetworkImage(info[index]["images"].toString()),
+    //               ),
+    //             ),
+    //           ),
+    //         );
+    //       }),
+    // ),
+    // );
   }
 }
+// quantityController.text.length == 0
+// FirebaseFirestore.instance
+//                         .collection("sellers")
+//                         .where('totalQuantity',
+//                             isGreaterThanOrEqualTo:
+//                                 int.parse(quantityController.text))
+//                         .snapshots(),

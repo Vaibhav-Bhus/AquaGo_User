@@ -3,10 +3,10 @@ class Controller {
 }
 
 class Quantity {
-  static late int chilledJar;
-  static late int chilledBottle;
-  static late int normalJar;
-  static late int normalBottle;
+  static int chilledJar = 0;
+  static int chilledBottle = 0;
+  static int normalJar = 0;
+  static int normalBottle = 0;
   static late String orderedFrom;
   static late String address;
   static late String floorNo;

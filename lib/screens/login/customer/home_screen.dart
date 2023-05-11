@@ -15,43 +15,40 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget get bottomNavigationBar {
     return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(6.0),
-            child: BottomNavigationBar(
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: 'Shop',
-                  backgroundColor: Colors.red,
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.edit_note),
-                  label: 'Daily',
-                  backgroundColor: Colors.green,
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart),
-                  label: 'Order',
-                  backgroundColor: Colors.purple,
-                ),
-              ],
-              currentIndex: _selectedIndex,
-              selectedItemColor: const Color(0xFF576CD6),
-              onTap: (int index) {
-                setState(
-                  () {
-                    _selectedIndex = index;
-                  },
-                );
-              },
+      
+      padding: const EdgeInsets.symmetric(horizontal: 0),
+      child: ClipRRect(
+        // borderRadius: BorderRadius.circular(6.0),
+        child: BottomNavigationBar(
+          
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Shop',
+              backgroundColor: Colors.red,
             ),
-          )),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.edit_note),
+              label: 'Daily',
+              backgroundColor: Colors.green,
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart),
+              label: 'Order',
+              backgroundColor: Colors.purple,
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: const Color(0xFF576CD6),
+          onTap: (int index) {
+            setState(
+              () {
+                _selectedIndex = index;
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 

@@ -6,13 +6,15 @@ class Seller {
   String? address;
   String? sellerAvatarUrl;
   String? waterType;
+  String? phone;
 
   Seller(
       {this.sellerName,
       this.sellerUID,
       this.address,
       this.sellerAvatarUrl,
-      this.waterType});
+      this.waterType,
+      this.phone});
 
   Seller.fromJson(Map<String, dynamic> json) {
     sellerName = json["sellerName"];
@@ -20,6 +22,8 @@ class Seller {
     address = json['address'];
     sellerAvatarUrl = json['sellerAvatarUrl'];
     waterType = json['waterType'];
+    phone = json['phone'];
+    print('all set to go');
   }
 
   Map<String, dynamic> toJson() {

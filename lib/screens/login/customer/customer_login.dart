@@ -10,6 +10,7 @@ import 'package:majorpor/screens/login/customer/home_screen.dart';
 import 'package:majorpor/widgets/button_loader.dart';
 import 'package:majorpor/widgets/controllers.dart';
 import 'package:majorpor/widgets/controllers.dart';
+import 'package:majorpor/widgets/error_dialog.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as auth;
@@ -88,46 +89,61 @@ class _CustomerLoginState extends State<CustomerLogin> {
   }
 
   void _verifyPhoneNumber() {
-    Controller.num = phoneNumberController.text;
-    _firebaseAuth.verifyPhoneNumber(
-        phoneNumber: "${"+91" + phoneNumberController.text.toString().trim()}",
-        verificationCompleted: (phoneAuthCredential) {},
-        verificationFailed: (FirebaseAuthException exception) {
-          customToast('verification Failed');
-          Navigator.pushAndRemoveUntil(
-              context,
-              MaterialPageRoute(builder: (context) => const CustomerLogin()),
-              (route) => false);
-          _handleError(exception);
-        },
-        codeSent: (String verificationId, int? resendToken) {
-          if (flag == 0) {
+    if (phoneNumberController.text.trim().length != 10) {
+      setState(() {
+        _loading = false;
+      });
+      showDialog(
+          context: context,
+          builder: (c) {
+            return ErrorDialog(
+              message: "Phone number should be 10 digit.",
+            );
+          });
+    } else {
+      Controller.num = phoneNumberController.text.trim();
+      _firebaseAuth.verifyPhoneNumber(
+          phoneNumber: "+91${phoneNumberController.text.toString().trim()}",
+          verificationCompleted: (phoneAuthCredential) {},
+          verificationFailed: (FirebaseAuthException exception) {
+            print(exception.toString());
+            customToast('verification Failed');
+            Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const CustomerLogin()),
+                (route) => false);
+            _handleError(exception);
+          },
+          codeSent: (String verificationId, int? resendToken) {
+            if (flag == 0) {
+              setState(() {
+                flag = 1;
+                _loading = false;
+              });
+            }
+            _verificationId = verificationId;
+            customToast("OTP sent");
             setState(() {
-              flag = 1;
-              _loading = false;
+              _status += 'Code Sent\n';
+              isCodeSent = true;
+              startTimer();
+              isPhoneNumberSubmitted = false;
             });
-          }
-          _verificationId = verificationId;
-          customToast("OTP sent");
-          setState(() {
-            _status += 'Code Sent\n';
-            isCodeSent = true;
-            startTimer();
-            isPhoneNumberSubmitted = false;
+          },
+          codeAutoRetrievalTimeout: (String verificationId) {
+            customToast("Timeout");
+            setState(() {
+              _loading = false;
+              isTimeOut = true;
+              _status += 'codeAutoRetrievalTimeout\n';
+            });
           });
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          customToast("Timeout");
-          setState(() {
-            _loading = false;
-            isTimeOut = true;
-            _status += 'codeAutoRetrievalTimeout\n';
-          });
-        });
+    }
   }
 
+  var dp = '';
   void _verifyOtp() async {
-    Controller.num = phoneNumberController.text.trim();
+    // Controller.num = phoneNumberController.text.trim();
     try {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: _verificationId,
@@ -137,46 +153,73 @@ class _CustomerLoginState extends State<CustomerLogin> {
           .signInWithCredential(credential)
           .then((authRes) async {
         _firebaseUser = authRes.user;
-        customToast('Loginned Successfully!!');
+        _timer!.cancel();
+        dp = 'go';
       }).catchError((e) {
+        dp = '';
+        showDialog(
+            context: context,
+            builder: (c) {
+              return ErrorDialog(
+                message: "Authentication Failed.",
+              );
+            });
+
+        print(e.toString());
         _handleError(e);
       });
+      print('completeeeeeeeee');
       setState(() {
         _loading = false;
         _status += 'Signed In\n';
-        //print('signed IN');
-      });
-      _timer!.cancel();
-      await FirebaseFirestore.instance
-          .collection("Users")
-          .where('num', isEqualTo: phoneNumberController.text)
-          .get()
-          .then((value) {
-        SharedPreferenceConstants.sharedPreferences!
-            .setString(SharedPreferenceConstants.mob, value.docs.first['num']);
-        SharedPreferenceConstants.sharedPreferences!.setString(
-            SharedPreferenceConstants.fname, value.docs.first['firstName']);
-        SharedPreferenceConstants.sharedPreferences!.setString(
-            SharedPreferenceConstants.lname, value.docs.first['lastName']);
-        SharedPreferenceConstants.sharedPreferences!
-            .setString(SharedPreferenceConstants.uid, value.docs.first['uId']);
-        SharedPreferenceConstants.sharedPreferences!.setString(
-            SharedPreferenceConstants.mail, value.docs.first['userMail']);
-
-        value.docs.isEmpty
-            ? Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const EntryTimeDetails()))
-            : Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const HomeScreen()));
+        print('signed IN');
       });
     } catch (e) {
       setState(() {
         _loading = false;
       });
-      customToast('Authentication Failed');
+      dp = '';
+      showDialog(
+          context: context,
+          builder: (c) {
+            return ErrorDialog(
+              message: "Authentication failed.",
+            );
+          });
+
       _handleError(e);
+    }
+    if (dp == 'go') {
+      customToast('Logged in');
+      try {
+        await FirebaseFirestore.instance
+            .collection("Users")
+            .where('num', isEqualTo: phoneNumberController.text)
+            .get()
+            .then((value) {
+          SharedPreferenceConstants.sharedPreferences!.setString(
+              SharedPreferenceConstants.mob, value.docs.first['num']);
+          SharedPreferenceConstants.sharedPreferences!.setString(
+              SharedPreferenceConstants.fname, value.docs.first['firstName']);
+          SharedPreferenceConstants.sharedPreferences!.setString(
+              SharedPreferenceConstants.lname, value.docs.first['lastName']);
+          SharedPreferenceConstants.sharedPreferences!.setString(
+              SharedPreferenceConstants.uid, value.docs.first['uId']);
+          SharedPreferenceConstants.sharedPreferences!.setString(
+              SharedPreferenceConstants.mail, value.docs.first['userMail']);
+
+          value.docs.isEmpty
+              ? Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const EntryTimeDetails()))
+              : Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+        });
+      } catch (e) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const EntryTimeDetails()));
+      }
     }
   }
 

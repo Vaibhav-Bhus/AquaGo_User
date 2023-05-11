@@ -19,10 +19,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
   Future<void> _logout() async {
     // FirebaseAuth _auth = ;
     await FirebaseAuth.instance.signOut();
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => CustomerLogin()),
-    );
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => CustomerLogin()),
+        (Route<dynamic> route) => false);
   }
 
   var name = '';
@@ -71,6 +70,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
                       tag: '',
                       child: CircleAvatar(
                         radius: 25,
+                        child: Icon(Icons.person),
                         backgroundColor: Colors.white,
                       )),
                   trailing: Icon(
@@ -85,18 +85,18 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   },
                 )),
           ),
-          ListTile(
-            title: const Text(
-              'Transtaction Details',
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
+          // ListTile(
+          //   title: const Text(
+          //     'Transtaction Details',
+          //     style: TextStyle(
+          //         fontSize: 18,
+          //         fontWeight: FontWeight.w600,
+          //         color: Colors.white),
+          //   ),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
           ListTile(
             title: const Text(
               'Log Out',

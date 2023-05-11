@@ -16,6 +16,7 @@ import 'package:majorpor/widgets/custom_toast.dart';
 import 'dart:io';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:majorpor/widgets/error_dialog.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:majorpor/razorpay/razor_key.dart' as razor;
 import 'package:majorpor/widgets/controllers.dart';
@@ -36,10 +37,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   var chilledBottle = Quantity.chilledBottle;
   var normaljar = Quantity.normalJar;
   var normalBottle = Quantity.normalBottle;
-  var chilledJarRate = 0;
-  var chilledBottleRate = 0;
-  var normaljarRate = 0;
-  var normalBottleRate = 0;
+  double chilledJarRate = 0;
+  double chilledBottleRate = 0;
+  double normaljarRate = 0;
+  double normalBottleRate = 0;
   var total = 0;
   var _onSelectionChanged;
   TextEditingController _date = TextEditingController();
@@ -66,21 +67,32 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   getStoreData() async {
-    var ui = SharedPreferenceConstants.sharedPreferences!
-        .getString(SharedPreferenceConstants.selleruid);
-    var res = await FirebaseFirestore.instance
-        .collection("sellers")
-        .doc(ui)
-        .collection('JarRates')
-        .doc('JarRates')
-        .get();
-    // print();
-    setState(() {
-      chilledJarRate = int.parse(res.data()!['chilledJarRate']);
-      chilledBottleRate = int.parse(res.data()!['chilledBottleRate']);
-      normaljarRate = int.parse(res.data()!['normalJarRate']);
-      normalBottleRate = int.parse(res.data()!['normalBottleRate']);
-    });
+    try {
+      var ui = SharedPreferenceConstants.sharedPreferences!
+          .getString(SharedPreferenceConstants.selleruid);
+      var res = await FirebaseFirestore.instance
+          .collection("sellers")
+          .doc(ui)
+          .collection('JarRates')
+          .doc('JarRates')
+          .get();
+      // print();
+      setState(() {
+        chilledJarRate = res.data()!['chilledJarRate'];
+        chilledBottleRate = res.data()!['chilledBottleRate'];
+        normaljarRate = res.data()!['normalJarRate'];
+        normalBottleRate = res.data()!['normalBottleRate'];
+      });
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (c) {
+            return ErrorDialog(
+              message: "You are not connected to the internet",
+            );
+          });
+      Navigator.of(context).pop();
+    }
 
     // .then((value) {
     // print(value.data());
@@ -233,7 +245,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     print(currentDate);
   }
 
-  List slotList = ['9 to 12', '12 to 3', '3 to 6', '6 to 9'];
+  List slotList = [
+    '9 AM - 12 PM',
+    '12 PM - 3 PM',
+    '3 PM - 6 PM',
+    '6 PM - 9 PM'
+  ];
   String? slots;
 
   @override
@@ -278,10 +295,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       elevation: 1,
                       color: Colors.transparent,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             height: 65,
-                            width: 280,
+                            width: 200,
                             child: ListTile(
                               title: Text(
                                 "Normal Jar",
@@ -301,9 +319,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                           Column(
                             children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
                               Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(14)),
@@ -311,17 +326,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   color: Colors.transparent,
                                   elevation: 1,
                                   child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       InkWell(
                                           onTap: () {
                                             if (normaljar > 0) {
                                               setState(() {
                                                 normaljar--;
+                                                Quantity.normalJar = normaljar;
                                               });
                                             }
                                           },
                                           child: const Icon(Icons.remove,
-                                              color: Colors.white)),
+                                              size: 30, color: Colors.white)),
                                       Text(
                                         "$normaljar",
                                         style: TextStyle(
@@ -333,17 +351,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         onTap: () {
                                           setState(() {
                                             normaljar++;
+                                            Quantity.normalJar = normaljar;
                                           });
                                         },
                                         child: const Icon(Icons.add,
-                                            color: Colors.white),
+                                            size: 30, color: Colors.white),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
                               Text(
-                                (normaljar * normaljarRate).toString(),
+                                (normaljar * normaljarRate)
+                                    .toStringAsFixed(2)
+                                    .toString(),
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
@@ -360,10 +381,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       elevation: 1,
                       color: Colors.transparent,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             height: 65,
-                            width: 280,
+                            width: 200,
                             child: ListTile(
                               title: Text(
                                 "Normal Bottle",
@@ -382,10 +404,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                           ),
                           Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
                               Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(14)),
@@ -393,17 +413,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   color: Colors.transparent,
                                   elevation: 1,
                                   child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       InkWell(
                                           onTap: () {
                                             if (normalBottle > 0) {
                                               setState(() {
                                                 normalBottle--;
+                                                Quantity.normalBottle =
+                                                    normalBottle;
                                               });
                                             }
                                           },
                                           child: const Icon(Icons.remove,
-                                              color: Colors.white)),
+                                              size: 30, color: Colors.white)),
                                       Text(
                                         "$normalBottle",
                                         style: TextStyle(
@@ -415,17 +439,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         onTap: () {
                                           setState(() {
                                             normalBottle++;
+                                            Quantity.normalBottle =
+                                                normalBottle;
                                           });
                                         },
                                         child: const Icon(Icons.add,
-                                            color: Colors.white),
+                                            size: 30, color: Colors.white),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
                               Text(
-                                (normalBottle * normalBottleRate).toString(),
+                                (normalBottle * normalBottleRate)
+                                    .toStringAsFixed(2)
+                                    .toString(),
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
@@ -442,10 +470,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       elevation: 1,
                       color: Colors.transparent,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             height: 65,
-                            width: 280,
+                            width: 200,
                             child: ListTile(
                               title: Text(
                                 "Chilled Jar",
@@ -464,10 +493,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                           ),
                           Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
                               Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(14)),
@@ -475,17 +502,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   color: Colors.transparent,
                                   elevation: 1,
                                   child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       InkWell(
                                           onTap: () {
                                             if (chilledJar > 0) {
                                               setState(() {
                                                 chilledJar--;
+                                                Quantity.chilledJar =
+                                                    chilledJar;
                                               });
                                             }
                                           },
                                           child: const Icon(Icons.remove,
-                                              color: Colors.white)),
+                                              size: 30, color: Colors.white)),
                                       Text(
                                         "$chilledJar",
                                         style: TextStyle(
@@ -497,17 +528,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         onTap: () {
                                           setState(() {
                                             chilledJar++;
+                                            Quantity.chilledJar = chilledJar;
                                           });
                                         },
                                         child: const Icon(Icons.add,
-                                            color: Colors.white),
+                                            size: 30, color: Colors.white),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
                               Text(
-                                (chilledJar * chilledJarRate).toString(),
+                                (chilledJar * chilledJarRate)
+                                    .toStringAsFixed(2)
+                                    .toString(),
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
@@ -524,10 +558,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       elevation: 1,
                       color: Colors.transparent,
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
                             height: 65,
-                            width: 280,
+                            width: 200,
                             child: ListTile(
                               title: Text(
                                 "Chilled Bottle",
@@ -546,28 +581,31 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ),
                           ),
                           Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
                               Container(
+                                // width: 150,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(14)),
                                 child: Card(
                                   color: Colors.transparent,
                                   elevation: 1,
                                   child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       InkWell(
                                           onTap: () {
                                             if (chilledBottle > 0) {
                                               setState(() {
                                                 chilledBottle--;
+                                                Quantity.chilledBottle =
+                                                    chilledBottle;
                                               });
                                             }
                                           },
                                           child: const Icon(Icons.remove,
-                                              color: Colors.white)),
+                                              size: 30, color: Colors.white)),
                                       Text(
                                         "$chilledBottle",
                                         style: TextStyle(
@@ -579,17 +617,21 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                         onTap: () {
                                           setState(() {
                                             chilledBottle++;
+                                            Quantity.chilledBottle =
+                                                chilledBottle;
                                           });
                                         },
                                         child: const Icon(Icons.add,
-                                            color: Colors.white),
+                                            size: 30, color: Colors.white),
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
                               Text(
-                                (chilledBottle * chilledBottleRate).toString(),
+                                (chilledBottle * chilledBottleRate)
+                                    .toStringAsFixed(2)
+                                    .toString(),
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
@@ -628,6 +670,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   (chilledBottle * chilledBottleRate) +
                                   (normalBottle * normalBottleRate) +
                                   (normaljar * normaljarRate))
+                              .toStringAsFixed(2)
                               .toString(),
                           style: TextStyle(
                               fontSize: 15,
@@ -638,7 +681,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ListTile(
                         visualDensity: const VisualDensity(vertical: -4),
                         title: const Text(
-                          "Charges",
+                          "Delivery Charges",
                           style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.w500,
@@ -674,6 +717,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       (chilledBottle * chilledBottleRate) +
                                       (normalBottle * normalBottleRate) +
                                       (normaljar * normaljarRate))))
+                              .toStringAsFixed(2)
                               .toString(),
                           style: TextStyle(
                               fontSize: 15,
@@ -718,9 +762,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                   ),
                   Container(
-                    width: 150,
-                    height: 45,
+                    padding: EdgeInsets.only(top: 12),
                     alignment: Alignment.center,
+                    width: 175,
+                    height: 45,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6),
                         gradient: const LinearGradient(
@@ -732,6 +777,25 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter)),
                     child: DropdownButton(
+                      alignment: Alignment.center,
+                      selectedItemBuilder: (BuildContext context) {
+                        //<-- SEE HERE
+                        return <String>[
+                          '9 AM - 12 PM',
+                          '12 PM - 3 PM',
+                          '3 PM - 6 PM',
+                          '6 PM - 9 PM'
+                        ].map((String value) {
+                          return Text(
+                            slots ?? '',
+                            // textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                                fontWeight: FontWeight.w500),
+                          );
+                        }).toList();
+                      },
                       underline: SizedBox(),
                       value: slots,
                       isExpanded: true,
@@ -739,9 +803,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       style: TextStyle(fontSize: 15),
                       hint: Text(
                         "     9 AM - 12 PM",
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 15,
+                            fontSize: 17,
                             fontWeight: FontWeight.w500),
                       ), // Not necessary for Option 1
                       onChanged: (newValue) {
@@ -760,7 +825,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       }).toList(),
                       icon: Icon(
                         Icons.keyboard_arrow_down_sharp,
-                        size: 32,
+                        size: 35,
                         color: Colors.white,
                       ),
                     ),
@@ -876,12 +941,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               InkWell(
                 onTap: () async {
                   await getOrderId();
-                  int abc = ((5 * int.parse(widget.floorNo)) +
-                      (((chilledJar * chilledJarRate) +
-                          (chilledBottle * chilledBottleRate) +
-                          (normalBottle * normalBottleRate) +
-                          (normaljar * normaljarRate))));
-                  amt = abc.toDouble();
+                  amt = ((5 * double.parse(widget.floorNo)) +
+                      (((chilledJar.toDouble() * chilledJarRate) +
+                          (chilledBottle.toDouble() * chilledBottleRate) +
+                          (normalBottle.toDouble() * normalBottleRate) +
+                          (normaljar.toDouble() * normaljarRate))));
+                  // amt = abc.toDouble();
                   payment = 'Cash On Delivery';
                   await storeDetails();
                   Navigator.of(context).pushAndRemoveUntil(
@@ -932,12 +997,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   void onError(CFErrorResponse errorResponse, String orderId) {
     print(errorResponse.getMessage());
-    print("Error while making payment");
+    print("-------------------------------------------------");
   }
 
   void receivedEvent(String event_name, Map<dynamic, dynamic> meta_data) {
     print(event_name);
     print(meta_data);
+    print(
+        '--------------------------------------------------------------------');
   }
 
   int orderId = 0;
@@ -973,6 +1040,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         'normalBottle': normalBottle,
         'chilledBottle': chilledBottle,
         'amt': amt,
+        'chilledBottleRate': chilledBottleRate,
+        'normalBottleRate': normalBottleRate,
+        'chilledJarRate': chilledJarRate,
+        'normalJarRate': normaljarRate,
         'floor': widget.floorNo,
         'address': widget.address,
         'shopName': SharedPreferenceConstants.sharedPreferences!
@@ -988,18 +1059,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   CFEnvironment environment = CFEnvironment.SANDBOX;
 
   getPaymentSessionId() async {
-    int abc = ((5 * int.parse(widget.floorNo)) +
-        (((chilledJar * chilledJarRate) +
-            (chilledBottle * chilledBottleRate) +
-            (normalBottle * normalBottleRate) +
-            (normaljar * normaljarRate))));
-    amt = abc.toDouble();
+    amt = ((5 * double.parse(widget.floorNo)) +
+        (((chilledJar.toDouble() * chilledJarRate) +
+            (chilledBottle.toDouble() * chilledBottleRate) +
+            (normalBottle.toDouble() * normalBottleRate) +
+            (normaljar.toDouble() * normaljarRate))));
+    // amt = abc.toDouble();
     try {
       var res = await http.post(Uri.https("sandbox.cashfree.com", "/pg/orders"),
           headers: <String, String>{
             'Content-Type': 'application/json',
             'x-client-id': 'TEST376896c8285edc3bc2c6451572698673',
-            'x-client-secret': 'TEST4099acc844b5b8841116c9793d4c3ab67763ab98',
+            'x-client-secret': 'TEST65671197bef2351abf044fa6a349e04258a2020e',
             'x-api-version': '2022-09-01'
           },
           body: jsonEncode({
@@ -1108,7 +1179,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           headers: <String, String>{
             'Content-Type': 'application/json',
             'x-client-id': 'TEST376896c8285edc3bc2c6451572698673',
-            'x-client-secret': 'TEST4099acc844b5b8841116c9793d4c3ab67763ab98'
+            'x-client-secret': 'TEST65671197bef2351abf044fa6a349e04258a2020e'
           },
           body: jsonEncode({
             "orderAmount": amt,

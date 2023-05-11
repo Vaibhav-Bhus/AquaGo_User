@@ -3,6 +3,7 @@ import 'package:majorpor/constants/shared_pref.dart';
 import 'package:majorpor/screens/login/customer/home_screen.dart';
 import 'package:majorpor/screens/login/customer/address_screen.dart';
 import 'package:majorpor/widgets/controllers.dart';
+import 'package:majorpor/widgets/custom_toast.dart';
 
 class DetailsPage extends StatefulWidget {
   final passedInfo;
@@ -42,7 +43,7 @@ class _DetailsPageState extends State<DetailsPage> {
           icon: const Icon(
             Icons.arrow_back,
             color: Colors.white,
-            size: 25,
+            size: 40,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -60,9 +61,9 @@ class _DetailsPageState extends State<DetailsPage> {
                   Hero(
                     tag: widget.passedInfo.sellerAvatarUrl,
                     child: Image(
-                      height: 210,
                       width: 250,
-                      fit: BoxFit.cover,
+                      height: 200,
+                      fit: BoxFit.fitWidth,
                       alignment: Alignment.topCenter,
                       image: NetworkImage(widget.passedInfo.sellerAvatarUrl),
                     ),
@@ -106,15 +107,19 @@ class _DetailsPageState extends State<DetailsPage> {
                             padding: const EdgeInsets.all(10.0),
                             child: ListTile(
                               trailing: Container(
-                                height: 25,
-                                width: 90,
+                                height: 40,
+                                width: 102,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black),
                                   borderRadius: BorderRadius.circular(6),
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
+                                    SizedBox(
+                                      width: 5,
+                                    ),
                                     InkWell(
                                         onTap: () {
                                           if (chilledJar > 0) {
@@ -125,14 +130,21 @@ class _DetailsPageState extends State<DetailsPage> {
                                         },
                                         child: const Icon(
                                           Icons.remove,
+                                          size: 30,
                                           color: Colors.white,
                                         )),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
                                     Text(
                                       "$chilledJar",
                                       style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.white),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
                                     ),
                                     InkWell(
                                       onTap: () {
@@ -142,9 +154,13 @@ class _DetailsPageState extends State<DetailsPage> {
                                       },
                                       child: const Icon(
                                         Icons.add,
+                                        size: 30,
                                         color: Colors.white,
                                       ),
-                                    )
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -174,8 +190,8 @@ class _DetailsPageState extends State<DetailsPage> {
                             padding: const EdgeInsets.all(10.0),
                             child: ListTile(
                               trailing: Container(
-                                height: 25,
-                                width: 90,
+                                height: 40,
+                                width: 102,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black),
                                   borderRadius: BorderRadius.circular(6),
@@ -185,7 +201,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                   children: [
                                     InkWell(
                                         onTap: () {
-                                          if (chilledJar > 0) {
+                                          if (normalJar > 0) {
                                             setState(() {
                                               normalJar--;
                                             });
@@ -193,12 +209,13 @@ class _DetailsPageState extends State<DetailsPage> {
                                         },
                                         child: const Icon(
                                           Icons.remove,
+                                          size: 30,
                                           color: Colors.white,
                                         )),
                                     Text(
                                       "$normalJar",
                                       style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.white),
                                     ),
@@ -210,6 +227,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                       },
                                       child: const Icon(
                                         Icons.add,
+                                        size: 30,
                                         color: Colors.white,
                                       ),
                                     )
@@ -241,8 +259,8 @@ class _DetailsPageState extends State<DetailsPage> {
                             padding: const EdgeInsets.all(10.0),
                             child: ListTile(
                               trailing: Container(
-                                height: 25,
-                                width: 90,
+                                height: 40,
+                                width: 102,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black),
                                   borderRadius: BorderRadius.circular(6),
@@ -252,7 +270,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                   children: [
                                     InkWell(
                                         onTap: () {
-                                          if (chilledJar > 0) {
+                                          if (chilledBottle > 0) {
                                             setState(() {
                                               chilledBottle--;
                                             });
@@ -260,12 +278,13 @@ class _DetailsPageState extends State<DetailsPage> {
                                         },
                                         child: const Icon(
                                           Icons.remove,
+                                          size: 30,
                                           color: Colors.white,
                                         )),
                                     Text(
                                       "$chilledBottle",
                                       style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.white),
                                     ),
@@ -276,7 +295,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                         });
                                       },
                                       child: const Icon(Icons.add,
-                                          color: Colors.white),
+                                          size: 30, color: Colors.white),
                                     )
                                   ],
                                 ),
@@ -306,8 +325,8 @@ class _DetailsPageState extends State<DetailsPage> {
                             padding: const EdgeInsets.all(10.0),
                             child: ListTile(
                               trailing: Container(
-                                height: 25,
-                                width: 90,
+                                height: 40,
+                                width: 102,
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.black),
                                   borderRadius: BorderRadius.circular(6),
@@ -317,18 +336,18 @@ class _DetailsPageState extends State<DetailsPage> {
                                   children: [
                                     InkWell(
                                         onTap: () {
-                                          if (chilledJar > 0) {
+                                          if (normalBottle > 0) {
                                             setState(() {
                                               normalBottle--;
                                             });
                                           }
                                         },
                                         child: const Icon(Icons.remove,
-                                            color: Colors.white)),
+                                            size: 30, color: Colors.white)),
                                     Text(
                                       "$normalBottle",
                                       style: TextStyle(
-                                          fontSize: 15,
+                                          fontSize: 18,
                                           fontWeight: FontWeight.w500,
                                           color: Colors.white),
                                     ),
@@ -339,7 +358,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                         });
                                       },
                                       child: const Icon(Icons.add,
-                                          color: Colors.white),
+                                          size: 30, color: Colors.white),
                                     )
                                   ],
                                 ),
@@ -366,22 +385,29 @@ class _DetailsPageState extends State<DetailsPage> {
               ),
               InkWell(
                 onTap: () {
-                  Quantity.chilledBottle = chilledBottle;
-                  Quantity.chilledJar = chilledJar;
-                  Quantity.normalBottle = normalBottle;
-                  Quantity.normalJar = normalJar;
-                  SharedPreferenceConstants.sharedPreferences!.setString(
-                      SharedPreferenceConstants.name,
-                      widget.passedInfo.sellerName);
-                  SharedPreferenceConstants.sharedPreferences!.setString(
-                      SharedPreferenceConstants.selleruid,
-                      widget.passedInfo.sellerUID);
+                  if (normalBottle > 0 ||
+                      normalJar > 0 ||
+                      chilledBottle > 0 ||
+                      chilledJar > 0) {
+                    Quantity.chilledBottle = chilledBottle;
+                    Quantity.chilledJar = chilledJar;
+                    Quantity.normalBottle = normalBottle;
+                    Quantity.normalJar = normalJar;
+                    SharedPreferenceConstants.sharedPreferences!.setString(
+                        SharedPreferenceConstants.name,
+                        widget.passedInfo.sellerName);
+                    SharedPreferenceConstants.sharedPreferences!.setString(
+                        SharedPreferenceConstants.selleruid,
+                        widget.passedInfo.sellerUID);
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AddressScreen()),
-                  );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AddressScreen()),
+                    );
+                  } else {
+                    customToast('Select quantity first.');
+                  }
                 },
                 child: Container(
                   width: 170,
