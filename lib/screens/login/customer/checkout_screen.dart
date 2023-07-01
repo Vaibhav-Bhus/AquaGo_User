@@ -10,7 +10,7 @@ import 'package:flutter_cashfree_pg_sdk/utils/cfenums.dart';
 import 'package:flutter_cashfree_pg_sdk/utils/cfexceptions.dart';
 import 'package:majorpor/constants/shared_pref.dart';
 import 'package:majorpor/screens/login/customer/address_screen.dart';
-import 'package:majorpor/screens/login/customer/order_status%20screen.dart';
+import 'package:majorpor/screens/login/customer/order_status_screen.dart';
 import 'package:majorpor/widgets/custom_toast.dart';
 import 'dart:io';
 import 'dart:convert';
@@ -40,7 +40,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   double normaljarRate = 0;
   double normalBottleRate = 0;
   var total = 0;
-  final TextEditingController _date = TextEditingController();
   String payment = '';
 
   int value = 0;
@@ -90,23 +89,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           });
       Navigator.of(context).pop();
     }
-
-    // .then((value) {
-    // print(value.data());
-
-    // value.docs.isEmpty
-    //     ? Navigator.push(
-    //         context,
-    //         MaterialPageRoute(
-    //             builder: (context) => const EntryTimeDetails()))
-    //     : Navigator.push(context,
-    //         MaterialPageRoute(builder: (context) => const HomeScreen()));
-    // });
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // Do something when payment succeeds
-    //print(response);
     verifySignature(
       signature: response.signature,
       paymentId: response.paymentId,
@@ -115,8 +100,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    // print(response);
-    // Do something when payment fails
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(response.message ?? ''),
@@ -125,8 +108,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
-    //print(response);
-    // Do something when an external wallet is selected
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(response.walletName ?? ''),
@@ -134,7 +115,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-// create order
   void createOrder() async {
     String username = razor.keyId;
     String password = razor.keySecret;
@@ -147,8 +127,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       "receipt": "rcptid_11"
     };
     var res = await http.post(
-      Uri.https(
-          "api.razorpay.com", "v1/orders"), //https://api.razorpay.com/v1/orders
+      Uri.https("api.razorpay.com", "v1/orders"),
       headers: <String, String>{
         "Content-Type": "application/json",
         'authorization': basicAuth,
@@ -159,17 +138,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     if (res.statusCode == 200) {
       openGateway(jsonDecode(res.body)['id']);
     }
-    //print(res.body);
   }
 
   openGateway(String orderId) {
     var options = {
       'key': razor.keyId,
-      'amount': 100, //in the smallest currency sub-unit.
+      'amount': 100,
       'name': 'Aqua Go',
-      'order_id': orderId, // Generate order_id using Orders API
+      'order_id': orderId,
       'description': 'Jar/Bottles',
-      'timeout': 60 * 5, // in seconds // 5 minutes
+      'timeout': 60 * 5,
       'prefill': {
         'contact': '7719874955',
         'email': 'vaibhavbhus01@gmail.com',
@@ -197,11 +175,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     var formData = parts.join('&');
     var res = await http.post(
       Uri.https(
-        "192.168.1.2", // my ip address , localhost
+        "192.168.1.2",
         "razorpay_signature_verify.php",
       ),
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded", // urlencoded
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       body: formData,
     );
@@ -213,21 +191,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   void dispose() {
-    _razorpay.clear(); // Removes all listeners
+    _razorpay.clear();
 
     super.dispose();
   }
-
-  // String? _selectedTime;
-  // Future<void> _show() async {
-  //   final TimeOfDay? result =
-  //       await showTimePicker(context: context, initialTime: TimeOfDay.now());
-  //   if (result != null) {
-  //     setState(() {
-  //       _selectedTime = result.format(context);
-  //     });
-  //   }
-  // }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? pickedDate = await showDatePicker(
@@ -240,7 +207,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         currentDate = pickedDate;
       });
     }
-    print(currentDate);
   }
 
   List slotList = [
@@ -775,7 +741,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     child: DropdownButton(
                       alignment: Alignment.center,
                       selectedItemBuilder: (BuildContext context) {
-                        //<-- SEE HERE
                         return <String>[
                           '9 AM - 12 PM',
                           '12 PM - 3 PM',
@@ -784,7 +749,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ].map((String value) {
                           return Text(
                             slots ?? '',
-                            // textAlign: TextAlign.center,
                             style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 17,
@@ -795,7 +759,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       underline: const SizedBox(),
                       value: slots,
                       isExpanded: true,
-                      // elevation: 8,
                       style: const TextStyle(fontSize: 15),
                       hint: const Text(
                         "     9 AM - 12 PM",
@@ -804,7 +767,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             color: Colors.white,
                             fontSize: 17,
                             fontWeight: FontWeight.w500),
-                      ), // Not necessary for Option 1
+                      ),
                       onChanged: (newValue) {
                         setState(() {
                           slots = newValue;
@@ -826,8 +789,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       ),
                     ),
                   ),
-                  // Text(
-                  //     ),
                 ],
               ),
               const SizedBox(
@@ -904,8 +865,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               InkWell(
                 onTap: () {
                   pay();
-                  // pay();
-                  // createOrder();
                 },
                 child: Center(
                   child: Container(
@@ -941,7 +900,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           (chilledBottle.toDouble() * chilledBottleRate) +
                           (normalBottle.toDouble() * normalBottleRate) +
                           (normaljar.toDouble() * normaljarRate))));
-                  // amt = abc.toDouble();
                   payment = 'Cash On Delivery';
                   await storeDetails();
                   Navigator.of(context).pushAndRemoveUntil(
@@ -981,19 +939,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   void verifyPayment(String orderId) async {
     payment = 'Paid';
-    print(payment);
 
     await storeDetails();
-    print("Verify Payment");
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const OrderStatusScreen()),
         (Route<dynamic> route) => false);
   }
 
   void onError(CFErrorResponse errorResponse, String orderId) {
-    print(errorResponse.getMessage());
-    print("-------------------------------------------------");
-
     showDialog(
         context: context,
         builder: (c) {
@@ -1003,12 +956,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         });
   }
 
-  void receivedEvent(String event_name, Map<dynamic, dynamic> meta_data) {
-    print(event_name);
-    print(meta_data);
-    print(
-        '--------------------------------------------------------------------');
-  }
+  void receivedEvent(String event_name, Map<dynamic, dynamic> meta_data) {}
 
   int orderId = 0;
   getOrderId() async {
@@ -1019,13 +967,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         .collection("orderID")
         .doc('orderID')
         .update({'orderID': orderId + 1});
-    print('update');
   }
 
   storeDetails() async {
-    print('start');
     String doc = (orderId + 1).toString();
-    FirebaseFirestore.instance.collection('bulkOrders')
+    await FirebaseFirestore.instance.collection('bulkOrders')
       ..doc(doc).set({
         'timeToDeliver': slots ?? slotList[0],
         'dateToDeliver': currentDate.toString(),
@@ -1052,7 +998,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         'shopName': SharedPreferenceConstants.sharedPreferences!
             .getString(SharedPreferenceConstants.name)
       });
-    print('add');
   }
 
   double amt = 0;
@@ -1067,7 +1012,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             (chilledBottle.toDouble() * chilledBottleRate) +
             (normalBottle.toDouble() * normalBottleRate) +
             (normaljar.toDouble() * normaljarRate))));
-    // amt = abc.toDouble();
     try {
       var res = await http.post(Uri.https("sandbox.cashfree.com", "/pg/orders"),
           headers: <String, String>{
@@ -1092,13 +1036,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             },
             "order_note": "some order note here",
           }));
-      print(res.body);
       var jsonResponse = jsonDecode(res.body);
-      print(jsonResponse);
       paymentSessionId = jsonResponse['payment_session_id'];
     } catch (e) {
       customToast('Something went wrong. Please try again ');
-      print(e.toString());
     }
   }
 
@@ -1113,8 +1054,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       return session;
     } on CFException catch (e) {
       customToast('Something went wrong. Please try again ');
-
-      print(e.message);
     }
     return null;
   }
@@ -1145,31 +1084,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       flag = true;
     } on CFException catch (e) {
       customToast('Something went wrong. Please try again ');
-
-      print(e.message);
     }
   }
 
   var flag = false;
-
-  // void cashFreePayment() {
-  //   getAccessToken(1, 1001).then((tokenData) {
-  //     print(tokenData);
-  //     print('+++++++++++++++++++++');
-  //     Map<String, String> _param = {
-  //       'stage': 'TEST',
-  //       'orderAmount': '1',
-  //       'orderId': '1001',
-  //       'orderCurrency': 'INR',
-  //       'customerName': 'Vaibhav Bhus',
-  //       'customerPhone': '7719874955',
-  //       'customerEmail': 'vaibhavbhus01@gmail.com',
-  //       'tokenData': tokenData,
-  //       'appId': 'TEST376896c8285edc3bc2c6451572698673'
-  //     };
-  //     // cfPaymentGatewayService.doPayment(_param)
-  //   });
-  // }
 
   getAccessToken() async {
     try {
@@ -1193,7 +1111,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             "notifyUrl": "https://test.cashfree.com",
             "orderNote": "some order note here",
           }));
-      print(res.body);
       if (res.statusCode == 200) {
         var jsonResponse = jsonDecode(res.body);
         if (jsonResponse['status'] == 'OK') {
@@ -1202,8 +1119,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       }
     } catch (e) {
       customToast('Something went wrong. Please try again ');
-
-      print(e.toString());
     }
   }
 }

@@ -18,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
       
       padding: const EdgeInsets.symmetric(horizontal: 0),
       child: ClipRRect(
-        // borderRadius: BorderRadius.circular(6.0),
         child: BottomNavigationBar(
           
           items: const [
@@ -68,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF576CD6),
       bottomNavigationBar: bottomNavigationBar,
-      body: _getDrawerItemWidget(_selectedIndex), //New
+      body: _getDrawerItemWidget(_selectedIndex),
     );
   }
 }

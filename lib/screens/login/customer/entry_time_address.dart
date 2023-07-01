@@ -20,17 +20,6 @@ class _EntryTimeAddressState extends State<EntryTimeAddress> {
   TextEditingController houseNoController = TextEditingController();
   TextEditingController pinCodeController = TextEditingController();
   TextEditingController streetNameController = TextEditingController();
-  // @override
-  // void dispose() {
-  //   // TODO: implement dispose
-  //   floorNoController.dispose();
-  //   areaNameController.dispose();
-  //   cityNameController.dispose();
-  //   buildingNameController.dispose();
-  //   houseNoController.dispose();
-  //   pinCodeController.dispose();
-  //   streetNameController.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {

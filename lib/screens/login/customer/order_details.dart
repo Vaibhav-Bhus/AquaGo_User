@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class OrderDetails extends StatefulWidget {
   final passedInfo;
-  // var screenwidth;
   const OrderDetails({super.key, this.passedInfo});
 
   @override

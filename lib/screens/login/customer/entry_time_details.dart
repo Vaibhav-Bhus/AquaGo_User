@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -21,13 +20,11 @@ class EntryTimeDetails extends StatefulWidget {
 class _EntryTimeDetailsState extends State<EntryTimeDetails> {
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
-  // TextEditingController buisnessNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
   @override
   void dispose() {
     firstNameController.dispose();
-    // buisnessNameController.dispose();
     emailController.dispose();
     lastNameController.dispose();
     super.dispose();
@@ -61,28 +58,6 @@ class _EntryTimeDetailsState extends State<EntryTimeDetails> {
         child: Center(
           child: Column(
             children: [
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // InkWell(
-              //   onTap: () {
-              //     _getImage();
-              //   },
-              //   child: CircleAvatar(
-              //     radius: MediaQuery.of(context).size.width * 0.20,
-              //     backgroundColor: Colors.white,
-              //     backgroundImage: imageXFile == null
-              //         ? null
-              //         : FileImage(File(imageXFile!.path)),
-              //     child: imageXFile == null
-              //         ? Icon(
-              //             Icons.add_photo_alternate,
-              //             size: MediaQuery.of(context).size.width * 0.20,
-              //             color: Colors.grey,
-              //           )
-              //         : null,
-              //   ),
-              // ),
               SizedBox(
                 height: 20,
               ),
@@ -131,28 +106,6 @@ class _EntryTimeDetailsState extends State<EntryTimeDetails> {
               SizedBox(
                 height: 20,
               ),
-              // Container(
-              //   margin: const EdgeInsets.symmetric(horizontal: 25),
-              //   padding: const EdgeInsets.symmetric(horizontal: 8),
-              //   width: double.infinity,
-              //   height: 48,
-              //   decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(6),
-              //       gradient: const LinearGradient(
-              //           colors: [Color(0xFFE8ECFD), Color(0xFF8898E3)])),
-              //   child: TextFormField(
-              //     controller: buisnessNameController,
-              //     textDirection: TextDirection.ltr,
-              //     decoration: const InputDecoration(
-              //       border: InputBorder.none,
-              //       hintText: "  Buisness Name",
-              //       fillColor: Colors.transparent,
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 20,
-              // ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 25),
                 padding: const EdgeInsets.symmetric(horizontal: 8),

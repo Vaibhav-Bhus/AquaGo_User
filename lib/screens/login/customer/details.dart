@@ -27,9 +27,6 @@ class _DetailsPageState extends State<DetailsPage> {
   int normalBottle = 0;
   @override
   Widget build(BuildContext context) {
-    // var screenheight = MediaQuery.of(context).size.height;
-
-    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -62,17 +59,6 @@ class _DetailsPageState extends State<DetailsPage> {
                       image: NetworkImage(widget.passedInfo.sellerAvatarUrl),
                     ),
                   ),
-                  // Padding(
-                  //     padding: const EdgeInsets.only(top: 40, left: 10),
-                  //     child: IconButton(
-                  //       icon: const Icon(
-                  //         Icons.arrow_back,
-                  //         color: Colors.black,
-                  //       ),
-                  //       onPressed: () {
-                  //         Navigator.pop(context);
-                  //       },
-                  //     )),
                 ],
               ),
               Padding(

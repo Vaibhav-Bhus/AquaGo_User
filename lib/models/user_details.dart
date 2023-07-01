@@ -8,23 +8,16 @@ class UserModel {
   String? firstName;
   String? lastName;
   String? buisnessName;
-  // String? userAddress;
   String? userMail;
-  // DateTime? dob;
-  // String? userCity;
-  // String? userGender;
+
   String? userPic;
   UserModel(
       {this.id,
       this.num,
       this.firstName,
       this.lastName,
-      // this.userAddress,
       this.buisnessName,
       this.userMail,
-      // this.dob,
-      // this.userCity,
-      // this.userGender,
       this.userPic});
 
   Map<String, dynamic> toJson() => {
@@ -47,9 +40,6 @@ class UserModel {
       lastName: snapshot['lastName'] ?? '',
       userMail: snapshot['userMail'] ?? '',
       buisnessName: snapshot['buisnessName'] ?? '',
-      // dob:
-      // DateTime.parse(map['dob']) ?? Timestamp.now(),
-      // userGender: snapshot['userGender'] ?? '',
       userPic: snapshot['userPic'] ?? '',
     );
   }

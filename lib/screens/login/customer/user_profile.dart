@@ -1,14 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:majorpor/constants/shared_pref.dart';
-import 'package:majorpor/widgets/controllers.dart';
-import 'package:firebase_storage/firebase_storage.dart' as fStorage;
 
 import '../../../widgets/error_dialog.dart';
 
@@ -35,8 +31,6 @@ class _UserProfileState extends State<UserProfile> {
           fname = value['firstName'].toString();
           lname = value['lastName'].toString();
           email = value['userMail'].toString();
-          // sellerImageUrl = value['avatar'].toString();
-          // business = value['businessName'].toString();
         });
       }
     });
@@ -80,28 +74,6 @@ class _UserProfileState extends State<UserProfile> {
               SizedBox(
                 height: 20,
               ),
-              // InkWell(
-              //   onTap: () {
-              //     _getImage();
-              //   },
-              //   child: CircleAvatar(
-              //     radius: MediaQuery.of(context).size.width * 0.20,
-              //     backgroundColor: Colors.white,
-              //     backgroundImage: imageXFile == null
-              //         ? null
-              //         : FileImage(File(imageXFile!.path)),
-              //     child: imageXFile == null
-              //         ? Icon(
-              //             Icons.add_photo_alternate,
-              //             size: MediaQuery.of(context).size.width * 0.20,
-              //             color: Colors.grey,
-              //           )
-              //         : null,
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: 20,
-              // ),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 25),
                 padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -150,30 +122,6 @@ class _UserProfileState extends State<UserProfile> {
                   ),
                 ),
               ),
-              // SizedBox(
-              //   height: 20,
-              // ),
-              // Container(
-              //   padding: const EdgeInsets.all(8.0),
-              //   width: 320,
-              //   height: 48,
-              //   decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(6),
-              //       gradient: const LinearGradient(
-              //           colors: [Color(0xFFE8ECFD), Color(0xFF8898E3)])),
-              //   child: TextFormField(
-              //     controller: TextEditingController(text: business ?? ""),
-              //     onChanged: (String value) {
-              //       business = value;
-              //     },
-              //     textDirection: TextDirection.ltr,
-              //     decoration: const InputDecoration(
-              //       border: InputBorder.none,
-              //       hintText: "  Buisness Name",
-              //       fillColor: Colors.transparent,
-              //     ),
-              //   ),
-              // ),
               SizedBox(
                 height: 20,
               ),
@@ -229,26 +177,7 @@ class _UserProfileState extends State<UserProfile> {
                             message: "Please enter last name",
                           );
                         });
-                  }
-                  // else if (sellerImageUrl.toString().isNotEmpty) {
-                  // }
-                  else {
-                    // String fileName =
-                    //     DateTime.now().millisecondsSinceEpoch.toString();
-                    // fStorage.Reference reference = fStorage
-                    //     .FirebaseStorage.instance
-                    //     .ref()
-                    //     .child("Users")
-                    //     .child(fileName);
-                    // fStorage.UploadTask uploadTask =
-                    //     reference.putFile(File(imageXFile!.path));
-                    // fStorage.TaskSnapshot taskSnapshot =
-                    //     await uploadTask.whenComplete(() {});
-                    // print('updated');
-                    // await taskSnapshot.ref.getDownloadURL().then((url) {
-                    //   sellerImageUrl = url;
-                    // });
-                    // print('file uploaded');
+                  } else {
                     await FirebaseFirestore.instance
                         .collection("Users")
                         .doc(FirebaseAuth.instance.currentUser!.uid)

@@ -13,73 +13,6 @@ class Orders extends StatefulWidget {
 }
 
 class _OrdersState extends State<Orders> {
-  // var info = [
-  //   {
-  //     "Date": "12-11-22",
-  //     "chilledBottle": "0",
-  //     "ChilledJar": "2",
-  //     "NormalJar": "0",
-  //     "NarmalBottle": "1",
-  //     "deliveredTo": "Amruta Arcade Solapur",
-  //     "orderId": "001",
-  //     "paymentStatus": "Paid",
-  //     "shopName": "Krishna Jal",
-  //     "totalAmount": "105",
-  //     "uid": FirebaseAuth.instance.currentUser!.uid
-  //   },
-  //   {
-  //     "Date": "12-11-22",
-  //     "chilledBottle": "0",
-  //     "ChilledJar": "2",
-  //     "NormalJar": "0",
-  //     "NarmalBottle": "1",
-  //     "deliveredTo": "Amruta Arcade Solapur",
-  //     "orderId": "001",
-  //     "paymentStatus": "Paid",
-  //     "shopName": "Krishna Jal",
-  //     "totalAmount": "105",
-  //     "uid": FirebaseAuth.instance.currentUser!.uid
-  //   },
-  //   {
-  //     "Date": "12-11-22",
-  //     "chilledBottle": "0",
-  //     "ChilledJar": "2",
-  //     "NormalJar": "0",
-  //     "NarmalBottle": "1",
-  //     "deliveredTo": "Amruta Arcade Solapur",
-  //     "orderId": "001",
-  //     "paymentStatus": "Paid",
-  //     "shopName": "Krishna Jal",
-  //     "totalAmount": "105",
-  //     "uid": FirebaseAuth.instance.currentUser!.uid
-  //   },
-  //   {
-  //     "Date": "12-11-22",
-  //     "chilledBottle": "0",
-  //     "ChilledJar": "2",
-  //     "NormalJar": "0",
-  //     "NarmalBottle": "1",
-  //     "deliveredTo": "Amruta Arcade Solapur",
-  //     "orderId": "001",
-  //     "paymentStatus": "Paid",
-  //     "shopName": "Krishna Jal",
-  //     "totalAmount": "105",
-  //     "uid": FirebaseAuth.instance.currentUser!.uid
-  //   },
-  //   {
-  //     "Date": "12-11-22",
-  //     "chilledBottle": "0",
-  //     "ChilledJar": "2",
-  //     "NormalJar": "0",
-  //     "NarmalBottle": "1",
-  //     "deliveredTo": "Amruta Arcade Solapur",
-  //     "orderId": "001",
-  //     "paymentStatus": "Paid",
-  //     "shopName": "Krishna Jal",
-  //     "totalAmount": "105",
-  //     "uid": FirebaseAuth.instance.currentUser!.uid
-  //   },
-  // ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,34 +28,6 @@ class _OrdersState extends State<Orders> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: InkWell(
-            //     onTap: () {
-            //       Navigator.push(
-            //           context,
-            //           MaterialPageRoute(
-            //               builder: (context) => const AddNewStore()));
-            //     },
-            //     child: Container(
-            //       width: double.infinity,
-            //       height: 48,
-            //       alignment: Alignment.center,
-            //       decoration: BoxDecoration(
-            //           borderRadius: BorderRadius.circular(6),
-            //           gradient: const LinearGradient(
-            //               colors: [
-            //                 Color(0xFF283855),
-            //                 Color(0xFF2E3F68),
-            //                 Color(0xFF3B5197)
-            //               ],
-            //               begin: Alignment.bottomCenter,
-            //               end: Alignment.topCenter)),
-            //       child: const Text("Add New Store",
-            //           style: TextStyle(fontSize: 18, color: Colors.white)),
-            //     ),
-            //   ),
-            // ),
             const ListTile(
               title: Text(
                 'Store Name',
@@ -171,13 +76,7 @@ class _OrdersState extends State<Orders> {
                                           fontWeight: FontWeight.w600,
                                           color: Colors.white),
                                     ),
-                                    // subtitle: Text(
-                                    //   '${model.dateToDeliver!.substring(0, 11)}',
-                                    //   style: const TextStyle(
-                                    //       fontSize: 15,
-                                    //       fontWeight: FontWeight.w500,
-                                    //       color: Colors.white),
-                                    // ),
+
                                     trailing: Text(
                                       '${model.amt}',
                                       style: const TextStyle(
@@ -200,117 +99,6 @@ class _OrdersState extends State<Orders> {
           ],
         ),
       )),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(8.0),
-      //   child:
-
-      //   CustomScrollView(
-      //     slivers: [
-      //       SliverToBoxAdapter(
-      //         child: StreamBuilder<QuerySnapshot>(
-      // stream: FirebaseFirestore.instance
-      //     .collection("bulkOrders")
-      //     .where('custUid',
-      //         isEqualTo: SharedPreferenceConstants.sharedPreferences!
-      //             .getString(SharedPreferenceConstants.uid))
-      //             .orderBy('orderId',descending: true)
-      //               .snapshots(),
-      //           builder: (context, snapshot) {
-      //             return !snapshot.hasData
-      //                 ? const Padding(
-      //                     padding: EdgeInsets.all(8),
-      //                   )
-      //                 : ListView.builder(
-      //                     scrollDirection: Axis.vertical,
-      //                     shrinkWrap: true,
-      //                     itemBuilder: (context, index) {
-      // BulkOrders model = BulkOrders.fromJson(
-      //   snapshot.data!.docs[index].data()!
-      //       as Map<String, dynamic>,
-      // );
-      //     return Card(
-      //       color: Colors.transparent,
-      //       child: ListTile(  // ),
-      //         title: Text(
-      //           '${model.shopName}',
-      //           style: const TextStyle(
-      //               fontSize: 18,
-      //               fontWeight: FontWeight.w600,
-      //               color: Colors.white),
-      //         ),
-      //         subtitle: Text(
-      //           '${model.dateToDeliver!.substring(0, 11)}',
-      //           style: const TextStyle(
-      //               fontSize: 15,
-      //               fontWeight: FontWeight.w500,
-      //               color: Colors.white),
-      //         ),
-      //         trailing: Text(
-      //           '${model.amt}',
-      //           style: const TextStyle(
-      //               fontSize: 15,
-      //               fontWeight: FontWeight.w500,
-      //               color: Colors.white),
-      //         ),
-      //         onTap: () {
-      //           Navigator.push(
-      //               context,
-      //               MaterialPageRoute(
-      //                   builder: (c) =>
-      //                       OrderDetails(passedInfo: model)));
-      //         },
-      //       ),
-      //     );
-      //   },
-      //   itemCount: snapshot.data!.docs.length,
-      // );
-      //           },
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
-      // body: Padding(
-      //   padding: const EdgeInsets.all(20.0),
-      //   child: ListView.builder(
-      //       itemCount: info.length,
-      //       itemBuilder: (context, index) {
-      //         return Container(
-      //             decoration:
-      //                 BoxDecoration(borderRadius: BorderRadius.circular(14)),
-      //             child: Card(
-      //               color: const Color(0xFF576CD6),
-      //               elevation: 5,
-      //                 child: Padding(
-      //                   padding: const EdgeInsets.all(8.0),
-      //                   child: ListTile(
-      //                     title: Text(info[index]["shopName"].toString()),
-      //                     subtitle: Text(info[index]["Date"].toString()),
-      //                     trailing: Text(info[index]["totalAmount"].toString()),
-      //                     onTap: () {
-      //                       Navigator.push(
-      //                         context,
-      //                         MaterialPageRoute(
-      //                             builder: (context) => OrderDetails(
-      //                                   passedInfo: info[index],
-      //                                 )),
-      //                       );
-      //                     },
-      //                     // leading: const Hero(
-      //                     //   tag: '',
-      //                     //   child: CircleAvatar(
-      //                     //     radius: 20.0,
-      //                     //     backgroundColor: Colors.white,
-      //                     //     // backgroundImage:
-      //                     //     //     NetworkImage(info[index]["images"].toString()),
-      //                     //   ),
-      //                     // ),
-      //                   ),
-      //                 ),
-      //               ),
-      //             );
-      //       }),
-      // ),
     );
   }
 }

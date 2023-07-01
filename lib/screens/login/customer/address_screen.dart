@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:majorpor/screens/login/customer/checkout_screen.dart';
-import 'package:majorpor/screens/login/customer/home_screen.dart';
 import 'package:majorpor/widgets/button_loader.dart';
-import 'package:majorpor/widgets/controllers.dart';
 import 'package:majorpor/widgets/custom_toast.dart';
 import 'package:majorpor/widgets/error_dialog.dart';
 

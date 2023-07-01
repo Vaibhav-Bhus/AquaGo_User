@@ -25,7 +25,6 @@ class _DailyRecordState extends State<DailyRecord> {
       body: SingleChildScrollView(
         child: Center(
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 decoration: BoxDecoration(
@@ -34,7 +33,6 @@ class _DailyRecordState extends State<DailyRecord> {
                 child: Card(
                   margin: const EdgeInsets.all(20),
                   color: Colors.transparent,
-
                   elevation: 1,
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(25, 8, 25, 15),
@@ -195,8 +193,6 @@ class _DailyRecordState extends State<DailyRecord> {
                       ],
                     ),
                   ),
-
-                  // surfaceTintColor: Colors.white,
                 ),
               ),
               GridView.count(
@@ -228,8 +224,6 @@ class _DailyRecordState extends State<DailyRecord> {
                               child: CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.white,
-                                // backgroundImage:
-                                //     NetworkImage(info[index]["images"].toString()),
                               ),
                             ),
                             const SizedBox(
@@ -318,8 +312,6 @@ class _DailyRecordState extends State<DailyRecord> {
                               child: CircleAvatar(
                                 radius: 30.0,
                                 backgroundColor: Colors.white,
-                                // backgroundImage:
-                                //     NetworkImage(info[index]["images"].toString()),
                               ),
                             ),
                             const SizedBox(
@@ -354,8 +346,6 @@ class _DailyRecordState extends State<DailyRecord> {
                               child: CircleAvatar(
                                 radius: 30.0,
                                 backgroundColor: Colors.white,
-                                // backgroundImage:
-                                //     NetworkImage(info[index]["images"].toString()),
                               ),
                             ),
                             const SizedBox(
@@ -390,8 +380,6 @@ class _DailyRecordState extends State<DailyRecord> {
                               child: CircleAvatar(
                                 radius: 20.0,
                                 backgroundColor: Colors.white,
-                                // backgroundImage:
-                                //     NetworkImage(info[index]["images"].toString()),
                               ),
                             ),
                             const SizedBox(

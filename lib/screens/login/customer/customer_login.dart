@@ -44,7 +44,6 @@ class _CustomerLoginState extends State<CustomerLogin> {
   int _start = 60;
 
   auth.User? _firebaseUser;
-  // auth.AuthCredential? _phoneAuthCredential;
   @override
   void initState() {
     super.initState();
@@ -80,7 +79,6 @@ class _CustomerLoginState extends State<CustomerLogin> {
   }
 
   void _handleError(e) {
-    //print(e.message);
     setState(() {
       _status += e.message + '\n';
     });
@@ -104,7 +102,6 @@ class _CustomerLoginState extends State<CustomerLogin> {
           phoneNumber: "+91${phoneNumberController.text.toString().trim()}",
           verificationCompleted: (phoneAuthCredential) {},
           verificationFailed: (FirebaseAuthException exception) {
-            print(exception.toString());
             customToast('verification Failed');
             Navigator.pushAndRemoveUntil(
                 context,
@@ -141,7 +138,6 @@ class _CustomerLoginState extends State<CustomerLogin> {
 
   var dp = '';
   void _verifyOtp() async {
-    // Controller.num = phoneNumberController.text.trim();
     try {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: _verificationId,
@@ -163,14 +159,11 @@ class _CustomerLoginState extends State<CustomerLogin> {
               );
             });
 
-        print(e.toString());
         _handleError(e);
       });
-      print('completeeeeeeeee');
       setState(() {
         _loading = false;
         _status += 'Signed In\n';
-        print('signed IN');
       });
     } catch (e) {
       setState(() {
@@ -393,7 +386,6 @@ class _CustomerLoginState extends State<CustomerLogin> {
                                     fieldHeight: 40,
                                     fieldWidth: 40,
                                     errorBorderColor: Colors.red,
-                                    // disabledColor: Colors.green,
                                     activeFillColor: Colors
                                         .transparent, // enter k baad back color
                                     activeColor: const Color(

@@ -18,7 +18,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
   final CustomerLogin cl = const CustomerLogin();
 
   Future<void> _logout() async {
-    // FirebaseAuth _auth = ;
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const CustomerLogin()),
@@ -57,7 +56,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
       backgroundColor: const Color(0xFF576CD6),
       elevation: 3,
       child: ListView(
-        // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
           SizedBox(
@@ -102,18 +100,6 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   },
                 )),
           ),
-          // ListTile(
-          //   title: const Text(
-          //     'Transtaction Details',
-          //     style: TextStyle(
-          //         fontSize: 18,
-          //         fontWeight: FontWeight.w600,
-          //         color: Colors.white),
-          //   ),
-          //   onTap: () {
-          //     Navigator.pop(context);
-          //   },
-          // ),
           ListTile(
             title: const Text(
               'Log Out',
@@ -134,26 +120,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
               Navigator.pop(context);
             },
           ),
-          // ListTile(
-          //   title: const Text('Test'),
-          //   onTap: () async {
-          //     await FirebaseFirestore.instance
-          //         .collection("Users")
-          //         .where('num', isEqualTo: '7719874955')
-          //         .get()
-          //         .then((value) {
-          //       print(value.docs.first['num']);
-
-          //     });
-          //   },
-          // ),
         ],
       ),
-
-      // customButton(context, "Profile", UserProfile()),
-
-      //   ],
-      // ),
     );
   }
 }
