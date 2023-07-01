@@ -10,7 +10,6 @@ import 'package:flutter_cashfree_pg_sdk/utils/cfenums.dart';
 import 'package:flutter_cashfree_pg_sdk/utils/cfexceptions.dart';
 import 'package:majorpor/constants/shared_pref.dart';
 import 'package:majorpor/screens/login/customer/address_screen.dart';
-import 'package:majorpor/screens/login/customer/home_screen.dart';
 import 'package:majorpor/screens/login/customer/order_status%20screen.dart';
 import 'package:majorpor/widgets/custom_toast.dart';
 import 'dart:io';
@@ -20,7 +19,6 @@ import 'package:majorpor/widgets/error_dialog.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:majorpor/razorpay/razor_key.dart' as razor;
 import 'package:majorpor/widgets/controllers.dart';
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final floorNo;
@@ -42,8 +40,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   double normaljarRate = 0;
   double normalBottleRate = 0;
   var total = 0;
-  var _onSelectionChanged;
-  TextEditingController _date = TextEditingController();
+  final TextEditingController _date = TextEditingController();
   String payment = '';
 
   int value = 0;
@@ -236,12 +233,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     final DateTime? pickedDate = await showDatePicker(
         context: context,
         initialDate: currentDate,
-        firstDate: DateTime(2015),
+        firstDate: DateTime.now(),
         lastDate: DateTime(2050));
-    if (pickedDate != null && pickedDate != currentDate)
+    if (pickedDate != null && pickedDate != currentDate) {
       setState(() {
         currentDate = pickedDate;
       });
+    }
     print(currentDate);
   }
 
@@ -282,14 +280,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   SharedPreferenceConstants.sharedPreferences!
                       .getString(SharedPreferenceConstants.name)
                       .toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w700,
                       color: Colors.white),
                 ),
               ),
-              // ElevatedButton(
-              //     onPressed: _show, child: const Text('Show Time Picker')),
               normaljar > 0
                   ? Card(
                       elevation: 1,
@@ -301,7 +297,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             height: 65,
                             width: 200,
                             child: ListTile(
-                              title: Text(
+                              title: const Text(
                                 "Normal Jar",
                                 style: TextStyle(
                                     fontSize: 17,
@@ -310,7 +306,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               ),
                               subtitle: Text(
                                 normaljarRate.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white),
@@ -342,7 +338,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                               size: 30, color: Colors.white)),
                                       Text(
                                         "$normaljar",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
                                             color: Colors.white),
@@ -365,7 +361,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 (normaljar * normaljarRate)
                                     .toStringAsFixed(2)
                                     .toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white),
@@ -387,7 +383,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             height: 65,
                             width: 200,
                             child: ListTile(
-                              title: Text(
+                              title: const Text(
                                 "Normal Bottle",
                                 style: TextStyle(
                                     fontSize: 17,
@@ -396,7 +392,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               ),
                               subtitle: Text(
                                 normalBottleRate.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white),
@@ -430,7 +426,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                               size: 30, color: Colors.white)),
                                       Text(
                                         "$normalBottle",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
                                             color: Colors.white),
@@ -454,7 +450,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 (normalBottle * normalBottleRate)
                                     .toStringAsFixed(2)
                                     .toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white),
@@ -476,7 +472,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             height: 65,
                             width: 200,
                             child: ListTile(
-                              title: Text(
+                              title: const Text(
                                 "Chilled Jar",
                                 style: TextStyle(
                                     fontSize: 17,
@@ -485,7 +481,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               ),
                               subtitle: Text(
                                 chilledJarRate.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white),
@@ -519,7 +515,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                               size: 30, color: Colors.white)),
                                       Text(
                                         "$chilledJar",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
                                             color: Colors.white),
@@ -542,7 +538,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 (chilledJar * chilledJarRate)
                                     .toStringAsFixed(2)
                                     .toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white),
@@ -564,7 +560,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             height: 65,
                             width: 200,
                             child: ListTile(
-                              title: Text(
+                              title: const Text(
                                 "Chilled Bottle",
                                 style: TextStyle(
                                     fontSize: 17,
@@ -573,7 +569,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               ),
                               subtitle: Text(
                                 chilledBottleRate.toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white),
@@ -608,7 +604,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                               size: 30, color: Colors.white)),
                                       Text(
                                         "$chilledBottle",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
                                             color: Colors.white),
@@ -632,7 +628,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 (chilledBottle * chilledBottleRate)
                                     .toStringAsFixed(2)
                                     .toString(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white),
@@ -647,7 +643,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 height: 10,
               ),
               Container(
-                margin: EdgeInsets.all(12.0),
+                margin: const EdgeInsets.all(12.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                 ),
@@ -672,7 +668,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   (normaljar * normaljarRate))
                               .toStringAsFixed(2)
                               .toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
                               color: Colors.white),
@@ -689,7 +685,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                         trailing: Text(
                           (5 * int.parse(widget.floorNo)).toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
                               color: Colors.white),
@@ -719,7 +715,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       (normaljar * normaljarRate))))
                               .toStringAsFixed(2)
                               .toString(),
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
                               color: Colors.white),
@@ -754,7 +750,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         currentDate == null
                             ? 'Select Date'
                             : '${currentDate.day}/${currentDate.month}/${currentDate.year}',
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.w500,
                             color: Colors.white),
@@ -762,7 +758,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(top: 12),
+                    padding: const EdgeInsets.only(top: 12),
                     alignment: Alignment.center,
                     width: 175,
                     height: 45,
@@ -796,12 +792,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           );
                         }).toList();
                       },
-                      underline: SizedBox(),
+                      underline: const SizedBox(),
                       value: slots,
                       isExpanded: true,
                       // elevation: 8,
-                      style: TextStyle(fontSize: 15),
-                      hint: Text(
+                      style: const TextStyle(fontSize: 15),
+                      hint: const Text(
                         "     9 AM - 12 PM",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -816,14 +812,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       },
                       items: slotList.map((value) {
                         return DropdownMenuItem<String>(
+                          value: value,
                           child: Text(
                             value,
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
-                          value: value,
                         );
                       }).toList(),
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.keyboard_arrow_down_sharp,
                         size: 35,
                         color: Colors.white,
@@ -837,9 +833,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               const SizedBox(
                 height: 10,
               ),
-
               Container(
-                margin: EdgeInsets.all(12.0),
+                margin: const EdgeInsets.all(12.0),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                 ),
@@ -849,8 +844,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                     child: ListTile(
-                      visualDensity: VisualDensity(vertical: -4),
-                      title: Text(
+                      visualDensity: const VisualDensity(vertical: -4),
+                      title: const Text(
                         "Delivery at Address",
                         style: TextStyle(
                             fontSize: 17,
@@ -862,7 +857,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AddressScreen()),
+                                builder: (context) => const AddressScreen()),
                           );
                         },
                         child: Container(
@@ -879,8 +874,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                   ],
                                   begin: Alignment.bottomCenter,
                                   end: Alignment.topCenter)),
-                          child: Text("Change",
-                              style: const TextStyle(
+                          child: const Text("Change",
+                              style: TextStyle(
                                   fontSize: 17,
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500)),
@@ -889,12 +884,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       horizontalTitleGap: 0,
                       subtitle: Text(
                         widget.address,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w500,
                             color: Colors.white),
                       ),
-                      leading: SizedBox(
+                      leading: const SizedBox(
                         width: 5,
                         child: Icon(
                           size: 20,
@@ -927,15 +922,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             ],
                             begin: Alignment.bottomCenter,
                             end: Alignment.topCenter)),
-                    child: Text("Pay Online",
-                        style: const TextStyle(
+                    child: const Text("Pay Online",
+                        style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                             color: Colors.white)),
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               InkWell(
@@ -951,7 +946,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   await storeDetails();
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
-                          builder: (context) => OrderStatusScreen()),
+                          builder: (context) => const OrderStatusScreen()),
                       (Route<dynamic> route) => false);
                 },
                 child: Center(
@@ -998,6 +993,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   void onError(CFErrorResponse errorResponse, String orderId) {
     print(errorResponse.getMessage());
     print("-------------------------------------------------");
+
+    showDialog(
+        context: context,
+        builder: (c) {
+          return ErrorDialog(
+            message: "Payment failed please try again.",
+          );
+        });
   }
 
   void receivedEvent(String event_name, Map<dynamic, dynamic> meta_data) {
@@ -1093,10 +1096,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       var jsonResponse = jsonDecode(res.body);
       print(jsonResponse);
       paymentSessionId = jsonResponse['payment_session_id'];
-
-      // print('doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-
-      // print('hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
     } catch (e) {
       customToast('Something went wrong. Please try again ');
       print(e.toString());

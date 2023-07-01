@@ -229,10 +229,18 @@ class _EntryTimeAddressState extends State<EntryTimeAddress> {
                                 "Pin code and floor no should be in digits.",
                           );
                         });
+                  } else if (floorNoController.text.trim().length < 1) {
+                    showDialog(
+                        context: context,
+                        builder: (c) {
+                          return ErrorDialog(
+                            message: "Floor number can't be empty.",
+                          );
+                        });
                   } else if (areaNameController.text.length > 0 &&
                       cityNameController.text.length > 0 &&
                       streetNameController.text.length > 0 &&
-                      buildingNameController.text.length >0 &&
+                      buildingNameController.text.length > 0 &&
                       houseNoController.text.length > 0 &&
                       pinCodeController.text.length == 6) {
                     try {

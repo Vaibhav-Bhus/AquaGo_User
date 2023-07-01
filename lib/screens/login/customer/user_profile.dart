@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:majorpor/constants/shared_pref.dart';
 import 'package:majorpor/widgets/controllers.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fStorage;
 
@@ -257,6 +258,14 @@ class _UserProfileState extends State<UserProfile> {
                       'avatar': sellerImageUrl,
                       // 'businessName': business ?? "",
                       'userMail': email ?? ""
+                    });
+                    setState(() {
+                      SharedPreferenceConstants.sharedPreferences!
+                          .setString(SharedPreferenceConstants.fname, fname);
+                      SharedPreferenceConstants.sharedPreferences!
+                          .setString(SharedPreferenceConstants.lname, lname);
+                      SharedPreferenceConstants.sharedPreferences!
+                          .setString(SharedPreferenceConstants.mail, email);
                     });
                     Navigator.of(context).pop();
                   }

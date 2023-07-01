@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:majorpor/constants/shared_pref.dart';
 import 'package:majorpor/models/bulk_order.dart';
-import 'package:majorpor/models/seller_details.dart';
-import 'package:majorpor/screens/login/customer/details.dart';
 import 'package:majorpor/screens/login/customer/drawer.dart';
 import 'package:majorpor/screens/login/customer/order_details.dart';
 

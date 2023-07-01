@@ -315,6 +315,17 @@ class _AddressScreenState extends State<AddressScreen> {
                                         "Pin code and floor no should be in digits.",
                                   );
                                 });
+                          } else if (floorNo.trim().length < 1) {
+                            setState(() {
+                              loading = false;
+                            });
+                            showDialog(
+                                context: context,
+                                builder: (c) {
+                                  return ErrorDialog(
+                                    message: "Floor number can't be empty.",
+                                  );
+                                });
                           } else if (areaName.length > 0 &&
                               cityName.length > 0 &&
                               streetName.length > 0 &&

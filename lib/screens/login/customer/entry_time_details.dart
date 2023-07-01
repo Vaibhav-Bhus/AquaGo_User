@@ -1,6 +1,5 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
-import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:majorpor/constants/shared_pref.dart';
 import 'package:majorpor/screens/login/customer/entry_time_address.dart';
-import 'package:majorpor/screens/login/customer/home_screen.dart';
 import 'package:majorpor/widgets/controllers.dart';
 import 'package:majorpor/widgets/custom_toast.dart';
 import 'package:majorpor/widgets/error_dialog.dart';
@@ -179,7 +177,7 @@ class _EntryTimeDetailsState extends State<EntryTimeDetails> {
               ),
               InkWell(
                 onTap: () async {
-                  if (firstNameController.text.length < 1) {
+                  if (firstNameController.text.isEmpty) {
                     showDialog(
                         context: context,
                         builder: (c) {
@@ -187,7 +185,7 @@ class _EntryTimeDetailsState extends State<EntryTimeDetails> {
                             message: "Please enter first name",
                           );
                         });
-                  } else if (lastNameController.text.length < 1) {
+                  } else if (lastNameController.text.isEmpty) {
                     showDialog(
                         context: context,
                         builder: (c) {
@@ -195,7 +193,7 @@ class _EntryTimeDetailsState extends State<EntryTimeDetails> {
                             message: "Please enter last name",
                           );
                         });
-                  } else if (emailController.text.length < 1 ||
+                  } else if (emailController.text.isEmpty ||
                       !validateEmail(emailController.text.trim())) {
                     showDialog(
                         context: context,

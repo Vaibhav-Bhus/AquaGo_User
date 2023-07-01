@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:majorpor/constants/shared_pref.dart';
@@ -139,6 +141,28 @@ class _ShopListState extends State<ShopList> {
   // }
   TextEditingController quantityController = TextEditingController();
 
+  String name =
+      '${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.fname)} ${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.lname)}';
+  Timer? timer;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    timer = Timer.periodic(Duration(seconds: 0), (Timer t) {
+      setState(() {
+        name =
+            '${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.fname)} ${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.lname)}';
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    timer?.cancel();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -146,8 +170,7 @@ class _ShopListState extends State<ShopList> {
         elevation: 1,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        title: Text(
-            '${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.fname)} ${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.lname)}'),
+        title: Text(name),
       ),
       drawer: const DrawerScreen(),
       backgroundColor: const Color(0xFF576CD6),

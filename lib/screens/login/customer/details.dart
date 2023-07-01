@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:majorpor/constants/shared_pref.dart';
-import 'package:majorpor/screens/login/customer/home_screen.dart';
 import 'package:majorpor/screens/login/customer/address_screen.dart';
 import 'package:majorpor/widgets/controllers.dart';
 import 'package:majorpor/widgets/custom_toast.dart';
@@ -30,12 +29,7 @@ class _DetailsPageState extends State<DetailsPage> {
   Widget build(BuildContext context) {
     // var screenheight = MediaQuery.of(context).size.height;
 
-    List<String> itemsAvailable = [
-      "Normal Jar",
-      "Chilled Jar",
-      "Normal Bottle",
-      "Chilled Bottle",
-    ];
+    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

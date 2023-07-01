@@ -9,7 +9,6 @@ import 'package:majorpor/screens/login/customer/entry_time_details.dart';
 import 'package:majorpor/screens/login/customer/home_screen.dart';
 import 'package:majorpor/widgets/button_loader.dart';
 import 'package:majorpor/widgets/controllers.dart';
-import 'package:majorpor/widgets/controllers.dart';
 import 'package:majorpor/widgets/error_dialog.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,7 +18,6 @@ import '../../../widgets/custom_toast.dart';
 
 class CustomerLogin extends StatefulWidget {
   const CustomerLogin({super.key});
-
   @override
   State<CustomerLogin> createState() => _CustomerLoginState();
 }

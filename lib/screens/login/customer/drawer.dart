@@ -1,4 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:majorpor/constants/shared_pref.dart';
@@ -20,19 +21,34 @@ class _DrawerScreenState extends State<DrawerScreen> {
     // FirebaseAuth _auth = ;
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => CustomerLogin()),
+        MaterialPageRoute(builder: (context) => const CustomerLogin()),
         (Route<dynamic> route) => false);
   }
 
-  var name = '';
-  var num = '';
+  var num =
+      '${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.mob)}';
+  var name =
+      '${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.fname)} ${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.lname)}';
+
+  Timer? timer;
   @override
   void initState() {
     super.initState();
-    num =
-        '${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.mob)}';
-    name =
-        '${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.fname)} ${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.lname)}';
+    timer = Timer.periodic(Duration(seconds: 0), (Timer t) {
+      setState(() {
+        num =
+            '${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.mob)}';
+        name =
+            '${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.fname)} ${SharedPreferenceConstants.sharedPreferences!.getString(SharedPreferenceConstants.lname)}';
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    timer?.cancel();
   }
 
   @override
@@ -51,36 +67,37 @@ class _DrawerScreenState extends State<DrawerScreen> {
                   color: Colors.transparent,
                 ),
                 child: ListTile(
-                  visualDensity: VisualDensity(vertical: -4),
+                  visualDensity: const VisualDensity(vertical: -4),
                   title: Text(
                     name,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                         color: Colors.white),
                   ),
                   subtitle: Text(
                     num,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                         color: Colors.white),
                   ),
-                  leading: Hero(
+                  leading: const Hero(
                       tag: '',
                       child: CircleAvatar(
                         radius: 25,
                         child: Icon(Icons.person),
                         backgroundColor: Colors.white,
                       )),
-                  trailing: Icon(
+                  trailing: const Icon(
                     Icons.edit,
                     color: Colors.white,
                   ),
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => UserProfile()),
+                      MaterialPageRoute(
+                          builder: (context) => const UserProfile()),
                     );
                   },
                 )),
