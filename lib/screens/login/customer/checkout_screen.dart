@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use, unused_catch_clause
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_cashfree_pg_sdk/api/cferrorresponse/cferrorresponse.dart';
@@ -46,7 +48,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   DateTime currentDate = DateTime.now();
 
   final _razorpay = Razorpay();
-
+  var sellerMoney;
   var cfPaymentGatewayService = CFPaymentGatewayService();
   @override
   void initState() {
@@ -72,7 +74,6 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           .collection('JarRates')
           .doc('JarRates')
           .get();
-      // print();
       setState(() {
         chilledJarRate = res.data()!['chilledJarRate'];
         chilledBottleRate = res.data()!['chilledBottleRate'];
@@ -968,6 +969,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         .doc('orderID')
         .update({'orderID': orderId + 1});
   }
+
+  
 
   storeDetails() async {
     String doc = (orderId + 1).toString();
